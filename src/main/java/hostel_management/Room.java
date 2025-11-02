@@ -1,14 +1,14 @@
 package hostel_management;
 
 public class Room {
-	private String roomnumber;
+	private String roomNumber;
 	private boolean available = true;
 	private String tenant;
 	
 	
 	
-	public Room(String roomnumber) {
-		this.roomnumber = roomnumber;
+	public Room(String roomNumber) {
+		this.roomNumber = roomNumber;
 	}
 	public boolean isAvailable() {
 		return available;
@@ -25,5 +25,8 @@ public class Room {
 		this.tenant=null;
 		this.available=true;
 	}
+	public String getTenant() {
+		return tenant;
+	}
+	}
 	
-}
