@@ -19,8 +19,11 @@ public class Room {
 			throw new IllegalStateException ("Room already occupied");
 		}
 		this.tenant=tenantName;
-		this.available= false;
-		
+		this.available= false;		
+	}
+	public void vacate() {
+		this.tenant=null;
+		this.available=true;
 	}
 	
 }
