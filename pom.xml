@@ -103,6 +103,10 @@
                 <targetTests>
                     <param>hostel_management.*</param>
                 </targetTests>
+               <outputFormats>
+      <param>HTML</param>
+      <param>XML</param>
+    </outputFormats>
                 <mutators>
                     <mutator>DEFAULTS</mutator>
                 </mutators>
