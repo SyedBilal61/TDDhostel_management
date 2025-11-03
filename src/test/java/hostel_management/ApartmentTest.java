@@ -1,6 +1,7 @@
 package hostel_management;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -48,6 +49,9 @@ public class ApartmentTest {
 	public void testApartmentIsEmpty() {
 		Apartment apt = new Apartment("A"); //create aparment
 		assertTrue(apt.isEmpty());
+		// New: assign a room to cover "return false" branch for coverage
+		apt.assignRoom(0, "Ali");
+		assertFalse(apt.isEmpty());
 	}
 	//check if apartment is full 
 	@Test
@@ -55,6 +59,7 @@ public class ApartmentTest {
 		Apartment apt = new Apartment("A");
 		apt.assignRoom(0, "Ali");	//first assign 
 		apt.assignRoom(1, "zain");
+		assertFalse(apt.isFull()); // for coverage to execute return false
 		apt.assignRoom(2, "musa");
 		apt.assignRoom(3, "zaki");
 		apt.assignRoom(4, "bilal");
