@@ -5,6 +5,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>hostel_management</name>
   <properties>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <junit.version>4.13.2</junit.version>
