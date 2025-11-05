@@ -10,12 +10,16 @@ import static org.mockito.Mockito.when;
 import org.junit.Test;
 
 public class ApartmentTest {
+	
+	
 	// check intially apartment has seven rooms 
 	@Test
 	public void testApartmentHasSevenRooms() {
 		Apartment apt = new Apartment("A"); //create aparment
 		assertEquals(7,	apt.getrooms().size());	
 	}
+	
+	
 	//Assign tenant To Room
 	@Test
 	public void testAssignTenantToRoom() {
@@ -23,6 +27,8 @@ public class ApartmentTest {
 		apt.assignRoom(0, "Ali");
 		assertEquals("Ali", apt.getrooms().get(0).getTenant());
 	}
+	
+	
 	//Vacate room through apartment 
 	@Test
 	public void testVacateRoomThroughApartment() {
@@ -31,6 +37,8 @@ public class ApartmentTest {
 		apt.vacateRoom(0); //vacate 
 		assertTrue(apt.getrooms().get(0).isAvailable());
 	}
+	
+	
 	// Prevent Double assigment through Apartment 
 	@Test(expected= IllegalStateException.class)
 	public void testPreventDoubleAssignmentThroughApartment() {
@@ -38,6 +46,9 @@ public class ApartmentTest {
 		apt.assignRoom(0, "Ali");
 		apt.assignRoom(0, "zain"); //throw exception
 	}
+	
+	
+	
 	//count Availble Rooms
 	@Test
 	public void testCountAvailableRoomsInApartment() {
@@ -46,6 +57,8 @@ public class ApartmentTest {
 		apt.assignRoom(1, "zain"); //second assign
 		assertEquals(5, apt.countAvailableRooms());
 	}
+	
+	
 	
 	//check if apartment is empty
 	@Test
@@ -56,6 +69,9 @@ public class ApartmentTest {
 		apt.assignRoom(0, "Ali");
 		assertFalse(apt.isEmpty());
 	}
+	
+	
+	
 	//check if apartment is full 
 	@Test
 	public void testApartmentIsFull() {
@@ -98,9 +114,14 @@ public class ApartmentTest {
         verify(mockRoom).assignTenant("Ali");
     }
 	
+	
+	
 	//  Mock behavior and test countAvailableRooms()
     // Here we control what isAvailable() returns and verify Apartment uses it.
-    @Test
+    
+	
+	
+	@Test
     public void testCountAvailableRooms_UsesIsAvailable() {
         // Arrange: create Apartment and mock two Room objects
         Apartment apt = new Apartment("A");
@@ -125,8 +146,6 @@ public class ApartmentTest {
         // One unavailable mock ⇒ less than 7 rooms available
         assertTrue(count < 7);
     }
-    
-    
     
     // Test isEmpty() logic with mocks
     // We simulate a single occupied room and ensure isEmpty() returns false.
