@@ -16,4 +16,4 @@ jobs:
         with:
           java-version: 1.8
       - name: Build with Maven
-        run: mvn -f com.examples.myproject/pom.xml clean verify
+        run: mvn -f pom.xml clean verify
