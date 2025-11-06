@@ -1,5 +1,5 @@
 # This workflow will build a Java project with Maven
-name: Java CI with Maven in Linux
+name: MY TDD PROJECT
 
 on:
   push:
