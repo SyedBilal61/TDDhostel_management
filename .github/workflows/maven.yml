@@ -24,7 +24,7 @@ jobs:
     
      #Step:Istall JDK 17 (so maven can use it )
       - name: Setup JDK 17
-        uses: actions/setup-java@3
+        uses: actions/setup-java@v3
         with:
           java-version: 17
      
