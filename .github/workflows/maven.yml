@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: windows-latest
     
     #Build Matrix for practice(java 8,11,17)
     strategy:
