@@ -12,7 +12,7 @@ jobs:
     #Build Matrix for practice(java 8,11,17)
     strategy:
       matrix:
-        java: [1.8, 11, 17]
+        java: [8, 11, 17]
                        
     
 
@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: ${{matrix.java}}
-          distribution: temurin
+          distribution: zulu
      
      
       #Step:Cache the .m2 folder to reuse dependencies
