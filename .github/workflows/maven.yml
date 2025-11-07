@@ -47,7 +47,7 @@ jobs:
       #Step:Archive Junit Report
       - name: Archive Junit Report
         uses: actions/upload-artifact@v4
-        if: ${{always(}}
+        if: ${{always()}}
         with:
           name: surefire-report-jdk-${{matrix.java }}
           path: '**/target/site'
