@@ -84,6 +84,20 @@
         </execution>
     </executions>
 </plugin>
+<!-- for coverall report-->
+      <plugin>
+      <groupId>org.eluder.coveralls</groupId>
+      <artifactId>coveralls-maven-plugin</artifactId>
+      <version>4.3.0</version>
+      <dependencies>
+        <dependency>
+          <groupId>javax.xml.bind</groupId>
+          <artifactId>jaxb-api</artifactId>
+          <version>2.3.1</version>
+        </dependency>
+      </dependencies>
+    </plugin>
+     
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-surefire-plugin</artifactId>
@@ -191,19 +205,6 @@
         <artifactId>maven-surefire-report-plugin</artifactId>
         <version>2.22.2</version>
       </plugin>
-     <!-- for coverall report-->
-      <plugin>
-      <groupId>org.eluder.coveralls</groupId>
-      <artifactId>coveralls-maven-plugin</artifactId>
-      <version>4.3.0</version>
-      <dependencies>
-        <dependency>
-          <groupId>javax.xml.bind</groupId>
-          <artifactId>jaxb-api</artifactId>
-          <version>2.3.1</version>
-        </dependency>
-      </dependencies>
-    </plugin>
       </plugins>
     </build>
   </profile>
