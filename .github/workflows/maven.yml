@@ -42,6 +42,6 @@ jobs:
       #Step:Build and test your project with maven 
       
       - name: Build with Maven
-        run: mvn -f pom.xml clean verify -Dmaven.compiler.source=${{matrix.java}} -Dmaven.compiler.target=${{matrix.java}}
+        run: mvn -f pom.xml clean verify "-Dmaven.compiler.source=${{matrix.java}}" "-Dmaven.compiler.target=${{matrix.java}}"
         
         
