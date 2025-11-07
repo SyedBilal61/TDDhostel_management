@@ -4,15 +4,15 @@ name: MY TDD PROJECT
 on:
   push:
   pull_request:
-    #Job Run only on windows
+    #Job Run only on ubuntu 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     
-    #Build Matrix for practice(java 8,11,17)
+    #Build Matrix
     strategy:
       matrix:
-        java: [8, 11, 17]
+        java: [17]
                        
     
 
@@ -42,6 +42,6 @@ jobs:
       #Step:Build and test your project with maven 
       
       - name: Build with Maven
-        run: mvn -f pom.xml clean verify "-Dmaven.compiler.source=${{matrix.java}}" "-Dmaven.compiler.target=${{matrix.java}}"
+        run: mvn -f pom.xml clean verify
         
         
