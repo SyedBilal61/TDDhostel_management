@@ -44,4 +44,12 @@ jobs:
       - name: Build with Maven
         run: mvn -f pom.xml clean verify
         
+      #Step:Archive Junit Report
+      - name: Archive Junit Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: surefire-report-jdk-${{matrix.java }}
+          path: '**/target/site'
+         
+       
         
