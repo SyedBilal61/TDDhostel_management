@@ -4,10 +4,10 @@ name: MY TDD PROJECT
 on:
   push:
   pull_request:
-    #Job Run only on ubuntu
+    #Job Run only on windows
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     
     #Build Matrix for practice(java 8,11,17)
     strategy:
