@@ -22,11 +22,11 @@ jobs:
       - uses: actions/checkout@v2
       
     
-     #Step:Istall JDK 17 (so maven can use it )
-      - name: Setup JDK 17
+     #Step:Istall JDK based on matrix  (so maven can use it )
+      - name: Setup JDK ${{matrix.java}}
         uses: actions/setup-java@v3
         with:
-          java-version: 17
+          java-version: ${{matrix.java}}
           distribution: temurin
      
      
@@ -43,3 +43,5 @@ jobs:
       
       - name: Build with Maven
         run: mvn -f pom.xml clean verify
+        
+        
