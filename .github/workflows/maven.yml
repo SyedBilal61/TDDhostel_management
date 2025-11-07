@@ -42,7 +42,7 @@ jobs:
       #Step:Build and test your project with maven 
       
       - name: Build with Maven
-        run: mvn -f pom.xml  surefire-report:report-onlysite:site -DgenerateReports=false
+        run: mvn -f pom.xml  surefire-report:report-only site:site -DgenerateReports=false
         
       #Step:Archive Junit Report
       - name: Archive Junit Report
