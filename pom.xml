@@ -173,6 +173,33 @@
         </execution>
       </executions>
     </plugin>
+    
+    <!-- Plugin for the run the docker through maven automatically -->
+    <plugin>
+      <groupId>io.fabric8</groupId>
+      <artifactId>docker-maven-plugin</artifactId>
+      <version>0.34.1</version>
+      <configuration>
+        <images>
+          <image>
+            <name>hostel_management</name>
+            <build>
+              <contextDir>${project.basedir}</contextDir>
+            </build>
+          </image>
+        </images>
+      </configuration>
+      <executions>
+        <execution>
+          <id>docker-build</id>
+          <phase>package</phase>
+          <goals>
+            <goal>build</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    
         </plugins>
  </build>
 <profiles>
