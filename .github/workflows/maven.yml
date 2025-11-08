@@ -32,7 +32,7 @@ jobs:
      
       #Step:Cache the .m2 folder to reuse dependencies
       - name: Cache Maven packages
-        uses: actions/cacheA@v4
+        uses: actions/cache@v4
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml','**/*.yml')}}  
