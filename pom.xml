@@ -182,37 +182,11 @@
         </execution>
       </executions>
     </plugin>
-    
-    <!-- Plugin for the run the docker through maven automatically -->
-    <plugin>
-      <groupId>io.fabric8</groupId>
-      <artifactId>docker-maven-plugin</artifactId>
-      <version>0.34.1</version>
-      <configuration>
-        <images>
-          <image>
-            <name>hostel_management</name>
-            <build>
-              <contextDir>${project.basedir}</contextDir>
-            
-  <args>
-    <jarToCopy>${project.artifactId}-${project.version}.jar</jarToCopy>
-</args>
-            </build>
-          </image>
-        </images>
-      </configuration>
-      <executions>
-        <execution>
-          <id>docker-build</id>
-          <phase>package</phase>
-          <goals>
-            <goal>build</goal>
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
+   
+   
+     
    <!-- create a fat JAR using Maven Assembly Plugin-->
+   
    <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-assembly-plugin</artifactId>
@@ -295,21 +269,89 @@
     </build>
   </profile>
   
+<!-- Profile to build and run Docker containers for the project -->
+
+
+<profile>
+  <id>docker</id>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>0.34.1</version>
+        <configuration>
+          <!-- Automatically create and remove custom Docker networks -->
+          <autoCreateCustomNetworks>true</autoCreateCustomNetworks>
+          
+          <images>
+            <!-- Java application Docker image -->
+            <image>
+              <name>hostel_management</name>
+              <build>
+                <contextDir>${project.basedir}</contextDir>
+                <args>
+                  <!-- Pass the JAR file built by Maven -->
+                  <jarToCopy>${project.artifactId}-${project.version}.jar</jarToCopy>
+                </args>
+              </build>
+              <run>
+                <!-- Run in custom network -->
+                <network>
+                  <mode>custom</mode>
+                  <name>my-network</name>
+                </network>
+                <!-- Wait for log output "HelloWorld!" to ensure app started -->
+                <wait>
+                  <log>HelloWorld!</log>
+                  <time>10000</time>
+                </wait>
+                <!-- Ensure MongoDB container is ready first -->
+                <dependsOn>
+                  <container>mongo</container>
+                </dependsOn>
+              </run>
+            </image>
+
+            <!-- MongoDB Docker image -->
+            <image>
+              <name>mongo:4.4.3</name>
+              <alias>mongo</alias>
+              <run>
+                <network>
+                  <mode>custom</mode>
+                  <name>my-network</name>
+                  <!-- Alias used for Java container to connect -->
+                  <alias>mongodb</alias>
+                </network>
+                <!-- Wait for MongoDB to be ready -->
+                <wait>
+                  <log>Waitingforconnections</log>
+                  <time>10000</time>
+                </wait>
+              </run>
+            </image>
+          </images>
+        </configuration>
+
+        <!-- Build and start containers during verify phase -->
+        <executions>
+          <execution>
+            <id>docker-build-and-run</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>build</goal>
+              <goal>start</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</profile>
   
-  <!-- Profile add for docker to build automatically-->
   
-  <profile>
-    <id>docker</id>
-    <build>
-      <plugins>
-        <plugin>
-          <groupId>io.fabric8</groupId>
-          <artifactId>docker-maven-plugin</artifactId>
-        </plugin>
-      </plugins>
-    </build>
-  </profile>
-  
+
 </profiles>
 
 </project>
