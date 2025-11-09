@@ -23,7 +23,7 @@ public class Main {
 
         // Create a simple document
         Document doc = new Document("name", "Greeting")
-                        .append("type", "HelloWorld!");
+                        .append("type", "HelloWorld! This is my TDD PROJECT");
         collection.insertOne(doc);
 
         // Should print "HelloWorld!"
