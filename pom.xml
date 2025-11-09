@@ -185,10 +185,10 @@
             <name>hostel_management</name>
             <build>
               <contextDir>${project.basedir}</contextDir>
-              <args>
+            
+  <args>
     <jarToCopy>${project.artifactId}-${project.version}.jar</jarToCopy>
 </args>
-
             </build>
           </image>
         </images>
