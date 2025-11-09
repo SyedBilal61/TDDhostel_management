@@ -1,0 +1,27 @@
+version: '3.8'   # Modern Compose version (similar to v2 but updated)
+
+services:
+  # 🏠 Your Java application
+  hostel_management:
+    image: hostel_management:latest        # Use your built image
+    container_name: hostel_management_app  # Optional: nice readable name
+    depends_on:
+      - mongodb                            # Wait for MongoDB to start
+    environment:
+      - MONGO_HOST=mongodb                 # Pass MongoDB hostname to app
+    command: ["java", "-jar", "/app/app.jar"]
+    ports:
+      - "8080:8080"                        # Optional: expose a port if you add a web UI later
+
+  # 🍃 MongoDB service
+  mongodb:
+    image: mongo:4.4.3                     # Same version as you used in build logs
+    container_name: hostel_mongo
+    ports:
+      - "27017:27017"                      # Expose MongoDB for local access
+    volumes:
+      - mongo_data:/data/db                # Persist MongoDB data locally
+
+# 💾 Volume for MongoDB persistence
+volumes:
+  mongo_data:
