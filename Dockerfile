@@ -9,4 +9,4 @@ ARG jarToCopy
 COPY /target/$jarToCopy /app/app.jar
 
 # Set default command to run your main class
-CMD ["java", "-cp", "/app/app.jar", "hostel_management.Main"]
+CMD ["java", "-cp", "/app/app.jar", "hostel_management.Main", "mongodb"]
