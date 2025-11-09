@@ -1,8 +1,34 @@
 package hostel_management;
 
-public class Main {
-	public static void main(String[] args) {
-        System.out.println("Hello,TDD  Hostel Management! Project");
-    }
+import org.bson.Document;
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 
+/**
+ * Simple app accessing MongoDB.
+ */
+public class Main {
+    public static void main(String[] args) {
+        // Default host is localhost
+        String mongoHost = "localhost";
+        if (args.length > 0) {
+            mongoHost = args[0];
+        }
+
+        // Default MongoDB port is 27017
+        MongoClient mongoClient = new MongoClient(mongoHost);
+        MongoDatabase db = mongoClient.getDatabase("mydb");
+        MongoCollection<Document> collection = db.getCollection("examples");
+
+        // Create a simple document
+        Document doc = new Document("name", "Greeting")
+                        .append("type", "HelloWorld!");
+        collection.insertOne(doc);
+
+        // Should print "HelloWorld!"
+        System.out.println(collection.find().first().get("type"));
+
+        mongoClient.close();
+    }
 }
