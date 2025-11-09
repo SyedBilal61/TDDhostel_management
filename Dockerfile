@@ -6,7 +6,7 @@ FROM eclipse-temurin:17-jdk
 ARG jarToCopy
 
 # Copy your JAR into the container
-COPY /target/$jarToCopy /app/app.jar
+COPY target/$jarToCopy /app/app.jar
 
 # Set default command to run your main class
 CMD ["java", "-cp", "/app/app.jar", "hostel_management.Main", "mongodb"]
