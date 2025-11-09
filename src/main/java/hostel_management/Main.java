@@ -11,7 +11,7 @@ import com.mongodb.client.MongoDatabase;
 public class Main {
     public static void main(String[] args) {
         // Default host is localhost
-        String mongoHost = "localhost";
+        String mongoHost = "mongodb";
         if (args.length > 0) {
             mongoHost = args[0];
         }
@@ -23,7 +23,7 @@ public class Main {
 
         // Create a simple document
         Document doc = new Document("name", "Greeting")
-                        .append("type", "HelloWorld! This is my TDD PROJECT");
+                        .append("type", "HelloWorld!");
         collection.insertOne(doc);
 
         // Should print "HelloWorld!"
