@@ -100,4 +100,16 @@ public class ApartmentControllerTest {
 
         verify(hostelView).showError("Apartment not found", null);
     }
+    //Test Added for improve the coverage 
+    @Test
+    public void testVacateRoomAndApartmentNotFound() {
+    	
+       when(apartmentRepository.findById("X")).thenReturn(null);
+       apartmentController.vacateRoom("X", 0);
+       
+       verify(hostelView).showError("Apartment not found",null);
+    }
+    	
+    
+
 }
