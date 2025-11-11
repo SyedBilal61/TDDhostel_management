@@ -11,7 +11,7 @@ import com.mongodb.client.MongoDatabase;
 public class Main {
     public static void main(String[] args) {
         // Default host is localhost
-        String mongoHost = "mongodb";
+        String mongoHost = "mongodb"; //or mogodb if using docker as we did bt create a network in docker
         if (args.length > 0) {
             mongoHost = args[0];
         }
