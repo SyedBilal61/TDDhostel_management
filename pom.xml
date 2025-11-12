@@ -317,75 +317,72 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>io.fabric8</groupId>
-        <artifactId>docker-maven-plugin</artifactId>
-        <version>0.34.1</version>
-        <configuration>
-          <!-- Automatically create and remove custom Docker networks -->
-          <autoCreateCustomNetworks>true</autoCreateCustomNetworks>
-          
-          <images>
-            <!-- Java application Docker image -->
-            <image>
-              <name>hostel_management</name>
-              <build>
-                <contextDir>${project.basedir}</contextDir>
-                <args>
-                  <!-- Pass the JAR file built by Maven -->
-                  <jarToCopy>${project.artifactId}-${project.version}.jar</jarToCopy>
-                </args>
-              </build>
-              <run>
-                <!-- Run in custom network -->
-                <network>
-                  <mode>custom</mode>
-                  <name>my-network</name>
-                </network>
-                <!-- Wait for log output "HelloWorld!" to ensure app started -->
-                <wait>
-                  <log>HelloWorld!</log>
-                  <time>10000</time>
-                </wait>
-                <!-- Ensure MongoDB container is ready first -->
-                <dependsOn>
-                  <container>mongo</container>
-                </dependsOn>
-              </run>
-            </image>
+    <groupId>io.fabric8</groupId>
+    <artifactId>docker-maven-plugin</artifactId>
+    <version>0.38.0</version>
 
+    <configuration>
+        <!-- Automatically create and remove custom Docker networks -->
+        <autoCreateCustomNetworks>true</autoCreateCustomNetworks>
+
+        <images>
             <!-- MongoDB Docker image -->
             <image>
-              <name>mongo:4.4.3</name>
-              <alias>mongo</alias>
-              <run>
-                <network>
-                  <mode>custom</mode>
-                  <name>my-network</name>
-                  <!-- Alias used for Java container to connect -->
-                  <alias>mongodb</alias>
-                </network>
-                <!-- Wait for MongoDB to be ready -->
-                <wait>
-                  <log>Waitingforconnections</log>
-                  <time>10000</time>
-                </wait>
-              </run>
+                <name>mongo:4.4.3</name>
+                <alias>mongodb</alias>
+                <run>
+                    <network>
+                        <mode>custom</mode>
+                        <name>mynetwork</name>
+                        <aliases>
+                            <alias>mongodb</alias>
+                        </aliases>
+                    </network>
+                    <wait>
+                        <log>Waiting for connections</log>
+                        <time>10000</time>
+                    </wait>
+                </run>
             </image>
-          </images>
-        </configuration>
 
-        <!-- Build and start containers during verify phase -->
-        <executions>
-          <execution>
+            <!-- Java application Docker image -->
+            <image>
+                <name>java-mongo-hostel</name> <!-- your real image name -->
+                <build>
+                    <contextDir>${project.basedir}</contextDir>
+                    <args>
+                        <jarToCopy>${project.artifactId}-${project.version}.jar</jarToCopy>
+                    </args>
+                </build>
+                <run>
+                    <network>
+                        <mode>custom</mode>
+                        <name>mynetwork</name>
+                    </network>
+                    <dependsOn>
+                        <dependsOn>mongodb</dependsOn>
+                    </dependsOn>
+                    <wait>
+                        <log>HelloWorld!</log>
+                        <time>10000</time>
+                    </wait>
+                </run>
+            </image>
+        </images>
+    </configuration>
+
+    <executions>
+        <execution>
             <id>docker-build-and-run</id>
             <phase>verify</phase>
             <goals>
-              <goal>build</goal>
-              <goal>start</goal>
+                <goal>build</goal>
+                <goal>start</goal>
             </goals>
-          </execution>
-        </executions>
-      </plugin>
+        </execution>
+    </executions>
+</plugin>
+
     </plugins>
   </build>
 </profile>
