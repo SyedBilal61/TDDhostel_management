@@ -286,9 +286,21 @@
 </plugin>
         
  
+  <!-- To run integration tests during the integration-test and verify phases of the Maven build lifecycle.-->
         
-        
-        
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-failsafe-plugin</artifactId>
+  <version>2.22.1</version>
+  <executions>
+    <execution>
+      <goals>
+        <goal>integration-test</goal>
+        <goal>verify</goal>
+      </goals>
+    </execution>
+  </executions>
+</plugin>        
         
         
         
