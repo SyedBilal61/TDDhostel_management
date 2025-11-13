@@ -1,16 +1,16 @@
 package com.hostel.repository;
 
+import java.util.List;
+
 import hostel_management.Room;
 
 public interface RoomRepository {
 
-	
-	
-  Return all rooms List<Room> findAll();
+	List<Room> findAll();
+    
+	Room findById(String roomName);
+    
+	void save(Room room);
   
-  Find an room by its name Room findById(String roomName);
-  
-  Save or update an room void save(room room);
-  
-  Delete an room by its name void delete(String roomName); 
+    void delete(String roomName); 
   }
