@@ -368,6 +368,23 @@
                     </wait>
                 </run>
             </image>
+
+<!--  for docker compose up-->
+
+            <image>
+    <alias>hostel_management</alias>   <!-- MUST match service name -->
+    <external>
+        <type>compose</type>
+        <basedir>${project.basedir}</basedir>
+    </external>
+    <run>
+        <wait>
+            <log>HelloWorld!</log>
+            <time>10000</time>
+        </wait>
+    </run>
+</image>
+
         </images>
     </configuration>
 
