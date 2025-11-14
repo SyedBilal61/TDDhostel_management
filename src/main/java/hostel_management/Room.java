@@ -28,5 +28,8 @@ public class Room {
 	public String getTenant() {
 		return tenant;
 	}
+	public String getRoomNumber() {
+		return roomNumber;
+	}
 	}
 	
