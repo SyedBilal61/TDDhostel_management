@@ -20,8 +20,8 @@ import com.hostel.view.RoomView;
 public class RoomSwingView extends JFrame implements RoomView {
 
 	private JPanel contentPane;
-	private JTextField txtRoomi;
-	private JTextField txtNametextbox;
+	private JTextField txtId;
+	private JTextField txtName;
 
 	/**
 	 * Launch the application.
@@ -57,7 +57,7 @@ public class RoomSwingView extends JFrame implements RoomView {
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		JLabel lblNewLabel = new JLabel("ROOM ID");
+		JLabel lblNewLabel = new JLabel("RoomId");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
@@ -65,15 +65,15 @@ public class RoomSwingView extends JFrame implements RoomView {
 		gbc_lblNewLabel.gridy = 0;
 		contentPane.add(lblNewLabel, gbc_lblNewLabel);
 		
-		txtRoomi = new JTextField();
-		txtRoomi.setText("roomIdTextBox");
+		txtId = new JTextField();
+		txtId.setText("roomIdTextBox");
 		GridBagConstraints gbc_txtRoomi = new GridBagConstraints();
 		gbc_txtRoomi.insets = new Insets(0, 0, 5, 0);
 		gbc_txtRoomi.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtRoomi.gridx = 1;
 		gbc_txtRoomi.gridy = 0;
-		contentPane.add(txtRoomi, gbc_txtRoomi);
-		txtRoomi.setColumns(10);
+		contentPane.add(txtId, gbc_txtRoomi);
+		txtId.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("TenantName");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
@@ -83,15 +83,15 @@ public class RoomSwingView extends JFrame implements RoomView {
 		gbc_lblNewLabel_1.gridy = 1;
 		contentPane.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
-		txtNametextbox = new JTextField();
-		txtNametextbox.setText("nameTextBox");
+		txtName = new JTextField();
+		txtName.setText("nameTextBox");
 		GridBagConstraints gbc_txtNametextbox = new GridBagConstraints();
 		gbc_txtNametextbox.insets = new Insets(0, 0, 5, 0);
 		gbc_txtNametextbox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtNametextbox.gridx = 1;
 		gbc_txtNametextbox.gridy = 1;
-		contentPane.add(txtNametextbox, gbc_txtNametextbox);
-		txtNametextbox.setColumns(10);
+		contentPane.add(txtName, gbc_txtNametextbox);
+		txtName.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Add");
 		btnNewButton.setEnabled(false);
