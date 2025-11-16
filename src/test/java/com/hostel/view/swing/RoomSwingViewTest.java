@@ -5,6 +5,7 @@ import org.assertj.swing.core.matcher.JButtonMatcher;
 import org.assertj.swing.core.matcher.JLabelMatcher;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
+import org.assertj.swing.fixture.JTextComponentFixture;
 import org.assertj.swing.junit.runner.GUITestRunner;
 import org.assertj.swing.junit.testcase.AssertJSwingJUnitTestCase;
 import org.junit.Test;
@@ -19,6 +20,9 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
     private RoomSwingView roomSwingView;
     
     
+    /**
+     * @wbp.parser.entryPoint
+     */
     @Override
     public void onSetUp() {
     	GuiActionRunner.execute(() -> {
@@ -43,7 +47,7 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
         window.label("errorMessageLabel").requireText(" ");
         
     	
-}
+    }
     
     @Test 
     public void testWhenRoomIdAndTenantNameAreNotEmptyThenAddButtonShouldBeEnabled() {
@@ -55,4 +59,30 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
     	
     }
     
+    @Test
+    public void testWhenEitherIdOrNameContainsOnlySpacesThenAddButtonShouldBeDisabled() {
+        JTextComponentFixture idTextBox = window.textBox("roomIdTextBox");
+        JTextComponentFixture nameTextBox = window.textBox("nameTextBox");
+
+        // Case 1: Roomid filled, name is spaces
+        idTextBox.enterText("A1");
+        nameTextBox.enterText("   "); // three spaces
+        window.button(JButtonMatcher.withText("Add")).requireDisabled();
+
+        // Reset text fields
+        idTextBox.setText("");
+        nameTextBox.setText("");
+
+        // Case 2: ROOM id is spaces/blank, name filled
+        idTextBox.enterText("   "); // spaces
+        nameTextBox.enterText("ZAIN");
+        window.button(JButtonMatcher.withText("Add")).requireDisabled();
+
+        // Case 3: both fields are spaces
+        idTextBox.setText("  ");
+        nameTextBox.setText(" ");
+        window.button(JButtonMatcher.withText("Add")).requireDisabled();
+    }
+
+
 }

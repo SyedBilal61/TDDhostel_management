@@ -87,8 +87,8 @@ public class RoomSwingView extends JFrame implements RoomView {
 		  @Override 
 		  public void keyReleased(KeyEvent e) {
 			  btnNewButton.setEnabled(
-			     !txtId.getText().isEmpty() &&
-			     !txtId.getText().isEmpty()
+			     !txtId.getText().trim().isEmpty() &&
+			     !txtName.getText().trim().isEmpty()
 			     );
 					  
 			 
