@@ -44,4 +44,15 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
         
     	
 }
+    
+    @Test 
+    public void testWhenRoomIdAndTenantNameAreNotEmptyThenAddButtonShouldBeEnabled() {
+    	
+        window.textBox("roomIdTextBox").enterText("A1");
+        window.textBox("nameTextBox").enterText("Zain");
+        window.button(JButtonMatcher.withText("Add")).requireEnabled();
+    	
+    	
+    }
+    
 }
