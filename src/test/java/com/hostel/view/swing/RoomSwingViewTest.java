@@ -1,6 +1,7 @@
 package com.hostel.view.swing;
 
 import org.assertj.swing.annotation.GUITest;
+import org.assertj.swing.core.matcher.JButtonMatcher;
 import org.assertj.swing.core.matcher.JLabelMatcher;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
@@ -34,6 +35,13 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
     public void testInitialSetup ( ) {
         window.label(JLabelMatcher.withText("RoomId"));
         window.textBox("roomIdTextBox").requireEnabled();
+        window.label(JLabelMatcher.withText("Tenant Name"));
+        window.textBox("nameTextBox").requireEnabled();
+        window.button(JButtonMatcher.withText("Add")).requireDisabled();
+        window.list("roomList");
+        window.button(JButtonMatcher.withText("Delete Selected")).requireDisabled();
+        window.label("errorMessageLabel").requireText(" ");
+        
     	
 }
 }
