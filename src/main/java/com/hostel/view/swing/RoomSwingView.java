@@ -1,19 +1,22 @@
 package com.hostel.view.swing;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 import com.hostel.view.RoomView;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import javax.swing.JTextField;
-import java.awt.Insets;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JList;
-import javax.swing.ListSelectionModel;
-import javax.swing.JScrollPane;
 
 
 public class RoomSwingView extends JFrame implements RoomView {
@@ -76,6 +79,28 @@ public class RoomSwingView extends JFrame implements RoomView {
 		gbc_btnNewButton.gridx = 0;
 		gbc_btnNewButton.gridy = 2;
 		getContentPane().add(btnNewButton, gbc_btnNewButton);
+		
+		
+		//Key lister for enabling add button when the Fiield are non empty 
+		
+		KeyAdapter btnAddEnabler = new KeyAdapter() {
+		  @Override 
+		  public void keyReleased(KeyEvent e) {
+			  btnNewButton.setEnabled(
+			     !txtId.getText().isEmpty() &&
+			     !txtId.getText().isEmpty()
+			     );
+					  
+			 
+		  }
+		};
+		txtId.addKeyListener(btnAddEnabler);
+		txtName.addKeyListener(btnAddEnabler);
+		
+		
+		
+		
+		
 		
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
