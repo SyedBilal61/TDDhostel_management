@@ -5,11 +5,14 @@ import org.assertj.swing.core.matcher.JButtonMatcher;
 import org.assertj.swing.core.matcher.JLabelMatcher;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
+import org.assertj.swing.fixture.JButtonFixture;
 import org.assertj.swing.fixture.JTextComponentFixture;
 import org.assertj.swing.junit.runner.GUITestRunner;
 import org.assertj.swing.junit.testcase.AssertJSwingJUnitTestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import hostel_management.Room;
 
 
 	
@@ -58,7 +61,7 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
     	
     	
     }
-    
+     
     @Test
     public void testWhenEitherIdOrNameContainsOnlySpacesThenAddButtonShouldBeDisabled() {
         JTextComponentFixture idTextBox = window.textBox("roomIdTextBox");
@@ -85,4 +88,43 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
     }
 
 
-}
+    //check when the Delete Selected button only enabled after a room is selected 
+    
+    
+    @Test
+    public void testTheButtonDeleteShouldBeEnabledOnlyAfterSelectionARoomIsSelectedFromList() {
+    	
+    	Room room = new Room("A1");
+    	room.assignTenant("Zain");
+    	
+    	
+    	
+    	GuiActionRunner.execute(() ->
+    	   roomSwingView.getRoomListModel().addElement(room)
+    	   
+    	   );
+    	//select a room
+    	
+    	window.list("roomList").selectItem(0);
+    	
+    	
+    	
+    	//get delete button fixutre 
+    	
+    	JButtonFixture deleteButton = window.button(JButtonMatcher.withText("Delete Selected"));
+    	
+    	
+    	//verify enable
+    	deleteButton.requireEnabled();
+    	
+    	
+    	window.list("roomList").clearSelection();
+    	
+    	
+    	//verfiy disabled
+    	deleteButton.requireDisabled();
+    	
+    }
+}	
+    	
+    
