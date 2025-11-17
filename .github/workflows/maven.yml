@@ -43,7 +43,7 @@ jobs:
       
       - name: Build with Maven
         run: 
-          mvn -f pom.xml clean verify -Pjacoco -DrepoToken=$COVERALLS_REPO_TOKEN coveralls:report
+          xvfb-run -a mvn -f pom.xml clean verify -Pjacoco -DrepoToken=$COVERALLS_REPO_TOKEN coveralls:report
         env:
           COVERALLS_REPO_TOKEN: ${{secrets.COVERALLS_TOKEN}}
         
