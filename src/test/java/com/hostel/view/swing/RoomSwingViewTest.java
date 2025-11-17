@@ -153,7 +153,23 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
     	
     }
     	
+    
+    
+    @Test
+    public void testErrorLabelShouldShowTheMessage() {
     	
+    	Room room1 = new Room ("A1");
+    	GuiActionRunner.execute(
+    			() -> roomSwingView.showError("Error Occured", room1)
+    	);
+    	
+    	window.label("errorMessageLabel")
+    	    .requireText("Error Occured: " + room1);
+    	
+    	
+    	
+    }
+    
     	
     	
     	

@@ -33,6 +33,7 @@ public class RoomSwingView extends JFrame implements RoomView {
 	private DefaultListModel<Room> roomListModel; // model storing the rooms
 	private JList<Room> roomList;                 // the visible list
 	private JButton btnDeleteSelected;
+	private JLabel lblNewLabel_2;
 
 	DefaultListModel<Room> getRoomListModel() {
 		return roomListModel;
@@ -172,7 +173,7 @@ public class RoomSwingView extends JFrame implements RoomView {
 		gbc_btnDeleteSelected.gridy = 4;
 		getContentPane().add(btnDeleteSelected, gbc_btnDeleteSelected);
 		
-		JLabel lblNewLabel_2 = new JLabel(" ");
+		lblNewLabel_2 = new JLabel(" ");
 		lblNewLabel_2.setName("errorMessageLabel");
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 		gbc_lblNewLabel_2.gridwidth = 2;
@@ -198,7 +199,7 @@ public class RoomSwingView extends JFrame implements RoomView {
 
 	@Override
 	public void showError(String message, Room room) {
-		// TODO Auto-generated method stub
+		lblNewLabel_2.setText(message+ ": " + room);
 		
 	}
 
