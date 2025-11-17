@@ -39,7 +39,9 @@ public class RoomSwingView extends JFrame implements RoomView {
 		return roomListModel;
 	}
 	
-	
+	private void resetErrorLabel() {
+	    lblNewLabel_2.setText(" "); // clear the error label
+	}
 	
 	
 	public RoomSwingView() {
@@ -226,7 +228,8 @@ public class RoomSwingView extends JFrame implements RoomView {
 
 	@Override
 	public void showRoom(Room room) {
-		// TODO Auto-generated method stub
+		roomListModel.addElement(room);
+		resetErrorLabel();
 		
 	}
 	
