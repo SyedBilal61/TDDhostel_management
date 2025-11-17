@@ -210,10 +210,27 @@ public class RoomSwingView extends JFrame implements RoomView {
 
 	@Override
 	public void tenantAssigned(Room room, String tenantName) {
-		// For simplicity, we assume tenant assignment only updates the room in the list
-	    if (!roomListModel.contains(room)) {
-	        roomListModel.addElement(room);
-	    }
+		
+		//Assign Tenant If Available 
+		if (room.isAvailable()) {
+			room.assignTenant(tenantName);
+			
+		}
+
+		
+		
+		 // Add room if not already in the list (by roomNumber)
+		boolean exists = false ;
+		for (int i= 0; i < roomListModel.size(); i++) {
+			if (roomListModel.get(i).getRoomNumber().equals(room.getRoomNumber())) {
+				exists = true ;
+				break;
+			}
+		}
+		if (!exists) {
+			roomListModel.addElement(room);
+		}
+	
 	    resetErrorLabel();
 		
 	}
@@ -223,8 +240,19 @@ public class RoomSwingView extends JFrame implements RoomView {
 
 	@Override
 	public void roomVacated(Room room) {
-		// TODO Auto-generated method stub
+		//vacate the room(set tenant to empty)
 		
+		room.vacate();
+		
+	// Remove the room from the list by room number 
+		
+	    for	(int i= 0; i < roomListModel.size(); i++) {
+			if (roomListModel.get(i).getRoomNumber().equals(room.getRoomNumber())) {
+				roomListModel.remove(i);
+				break;
+			}
+	    }
+		resetErrorLabel();
 	}
 
 

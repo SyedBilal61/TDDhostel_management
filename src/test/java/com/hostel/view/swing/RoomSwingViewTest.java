@@ -1,8 +1,10 @@
 package com.hostel.view.swing;
 
-import static org.junit.Assert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Arrays;
+
+import javax.swing.DefaultListModel;
 
 import org.assertj.swing.annotation.GUITest;
 import org.assertj.swing.core.matcher.JButtonMatcher;
@@ -15,7 +17,6 @@ import org.assertj.swing.junit.runner.GUITestRunner;
 import org.assertj.swing.junit.testcase.AssertJSwingJUnitTestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import hostel_management.Room;
 
@@ -208,11 +209,39 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
     	
     }
     	
+    @Test
+    public void testRoomVacatedShouldUpdateListAndResetErrorLabel() {
+    	
+        Room room1 = new Room ("A2");
+        Room room2 = new Room ("A3");
+        
+     // Add rooms to the list model in the EDT
+  	
+    	GuiActionRunner.execute(() -> 
+    	    	
+    	    	{
+    	    	DefaultListModel<Room> model = roomSwingView.getRoomListModel();
+    	    	model.addElement(room1);
+    	    	model.addElement(room2);
+    	    
+    	    	});
+    	    	// Execute: vacate room1 (removes it from the list)
+    	    	GuiActionRunner.execute(
+    	    	    	() -> roomSwingView.roomVacated(new Room ("A2")));
+    	  	
+    	   
+    	    	// Verify: only room2 remains in the list                   
+    	
+    	String[] listContents = window.list("roomList").contents();
+    	assertThat(listContents).containsExactly(room2.toString());
+    	
+    	window.label("errorMessageLabel").requireText(" "); //error reset
     	
     	
     	
     	
     	
+    }
     }
 
     	
