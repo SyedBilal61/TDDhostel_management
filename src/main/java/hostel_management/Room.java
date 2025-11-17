@@ -31,5 +31,16 @@ public class Room {
 	public String getRoomNumber() {
 		return roomNumber;
 	}
+	
+	
+	@Override
+	public String toString() {
+		if (tenant == null || tenant.isEmpty()) {
+			return roomNumber + " (Empty)" ; 
+			}
+		return roomNumber + tenant;	
+	}
+	
+	
 	}
 	
