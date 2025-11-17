@@ -180,5 +180,41 @@ public class RoomSwingView extends JFrame implements RoomView {
 		gbc_lblNewLabel_2.gridy = 5;
 		getContentPane().add(lblNewLabel_2, gbc_lblNewLabel_2);
 	}
+
+
+
+
+	@Override
+	public void showRoom(Room room) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	@Override
+	public void showError(String message, Room room) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	@Override
+	public void tenantAssigned(Room room, String tenantName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	@Override
+	public void roomVacated(Room room) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
