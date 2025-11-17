@@ -189,6 +189,24 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
     	
     }
     
+    
+    @Test
+    public void testTenantAssignedShouldUpdateListAndResetErrorLabel() {
+    	
+    	Room room = new Room ("A2");
+    	
+    	GuiActionRunner.execute(
+    	    	() -> roomSwingView.tenantAssigned(room , "Ali")
+    	    	);
+    	
+    	
+    	String[] listContents = window.list("roomList").contents();
+    	assertThat(listContents).containsExactly(room.toString());
+    	
+    	window.label("errorMessageLabel").requireText(" "); //error reset
+    	
+    	
+    }
     	
     	
     	

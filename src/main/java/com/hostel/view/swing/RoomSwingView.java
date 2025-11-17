@@ -210,7 +210,11 @@ public class RoomSwingView extends JFrame implements RoomView {
 
 	@Override
 	public void tenantAssigned(Room room, String tenantName) {
-		// TODO Auto-generated method stub
+		// For simplicity, we assume tenant assignment only updates the room in the list
+	    if (!roomListModel.contains(room)) {
+	        roomListModel.addElement(room);
+	    }
+	    resetErrorLabel();
 		
 	}
 
