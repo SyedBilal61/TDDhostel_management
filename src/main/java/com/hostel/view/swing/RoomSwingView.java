@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,13 +16,30 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import com.hostel.view.RoomView;
 
+import hostel_management.Room;
+
 
 public class RoomSwingView extends JFrame implements RoomView {
+
+	
 	private JTextField txtId;
 	private JTextField txtName;
+	private DefaultListModel<Room> roomListModel; // model storing the rooms
+	private JList<Room> roomList;                 // the visible list
+	private JButton btnDeleteSelected;
+
+	DefaultListModel<Room> getRoomListModel() {
+		return roomListModel;
+	}
+	
+	
+	
+	
 	public RoomSwingView() {
 		setTitle("HostelView");
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -111,19 +129,47 @@ public class RoomSwingView extends JFrame implements RoomView {
 		gbc_scrollPane.gridy = 3;
 		getContentPane().add(scrollPane, gbc_scrollPane);
 		
-		JList list = new JList();
-		scrollPane.setViewportView(list);
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setName("roomList");
 		
-		JButton btnNewButton_1 = new JButton("Delete Selected");
-		btnNewButton_1.setEnabled(false);
-		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 0);
-		gbc_btnNewButton_1.gridwidth = 2;
-		gbc_btnNewButton_1.gridx = 0;
-		gbc_btnNewButton_1.gridy = 4;
-		getContentPane().add(btnNewButton_1, gbc_btnNewButton_1);
+		//This Selection is for the checking of deleteSelection button for checking enabling/Disabling
+		
+		
+		// 1. Create the model (storage for room IDs)
+		roomListModel = new DefaultListModel<>();
+		
+		
+		// 2. Create the JList and connect it to the model
+		roomList = new JList<>(roomListModel);
+		
+		roomList.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				
+				btnDeleteSelected.setEnabled(roomList.getSelectedIndex() != -1);
+			}
+		});
+		roomList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		roomList.setName("roomList"); // same name as before
+
+		
+		
+		
+		
+		
+		
+		
+		// 3. put/show the JList to the scroll pane
+		scrollPane.setViewportView(roomList);
+		
+		
+		
+		
+		btnDeleteSelected = new JButton("Delete Selected");
+		btnDeleteSelected.setEnabled(false);
+		GridBagConstraints gbc_btnDeleteSelected= new GridBagConstraints();
+		gbc_btnDeleteSelected.insets = new Insets(0, 0, 5, 0);
+		gbc_btnDeleteSelected.gridwidth = 2;
+		gbc_btnDeleteSelected.gridx = 0;
+		gbc_btnDeleteSelected.gridy = 4;
+		getContentPane().add(btnDeleteSelected, gbc_btnDeleteSelected);
 		
 		JLabel lblNewLabel_2 = new JLabel(" ");
 		lblNewLabel_2.setName("errorMessageLabel");
