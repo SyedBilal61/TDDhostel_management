@@ -1,6 +1,8 @@
 
 package com.hostel.view;
 
+import java.util.List;
+
 import hostel_management.Room;
 
 public interface RoomView {
@@ -8,6 +10,11 @@ public interface RoomView {
     // Show details of a single room
     void showRoom(Room room);
 
+ // Show details of a All room
+    void showAllRooms(List<Room> rooms);
+    
+    
+    
     // Show error message for a room operation
     void showError(String message, Room room);
 
