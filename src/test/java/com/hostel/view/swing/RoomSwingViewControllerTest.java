@@ -4,6 +4,7 @@ import static org.mockito.Mockito.verify;
 
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,6 +36,14 @@ public class RoomSwingViewControllerTest {
 	}
 	
 	
+	// For Cleanup earliar test messup bcz if not then then the UI frame freezed 
+    @After
+    public void teardown() {
+    window.cleanUp();
+    }
+    
+    
+    
 	@Test 
 	public void testAddButtonCallsAssignTenant() {
 		
@@ -53,6 +62,7 @@ public class RoomSwingViewControllerTest {
 	public void testDeleteButtonCallsVacateRoom () {
 		
 		Room room = new Room("A1");
+		room.assignTenant("Zain");
 		GuiActionRunner.execute(() -> roomSwingView.showRoom(room));
 		
 		
@@ -68,7 +78,6 @@ public class RoomSwingViewControllerTest {
 		
 	
 	}
-	
 
 
 }
