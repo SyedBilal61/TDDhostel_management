@@ -20,6 +20,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import com.hostel.controller.RoomController;
 import com.hostel.view.RoomView;
 
 import hostel_management.Room;
@@ -34,6 +35,7 @@ public class RoomSwingView extends JFrame implements RoomView {
 	private JList<Room> roomList;                 // the visible list
 	private JButton btnDeleteSelected;
 	private JLabel lblNewLabel_2;
+	private RoomController roomController;
 
 	DefaultListModel<Room> getRoomListModel() {
 		return roomListModel;
@@ -42,6 +44,15 @@ public class RoomSwingView extends JFrame implements RoomView {
 	private void resetErrorLabel() {
 	    lblNewLabel_2.setText(" "); // clear the error label
 	}
+	
+	//setter for roomController 
+	
+	public void setRoomController(RoomController controller) {
+		this.roomController = controller;
+		
+	}
+	
+	
 	
 	
 	public RoomSwingView() {
@@ -91,10 +102,17 @@ public class RoomSwingView extends JFrame implements RoomView {
 		
 		JButton btnNewButton = new JButton("Add");
 		btnNewButton.setEnabled(false);
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
+		btnNewButton.setName("addButton");
+		btnNewButton.addActionListener(e -> {
+		    if (roomController != null) {
+		        roomController.assignTenant(txtId.getText().trim(), txtName.getText().trim());
+		    }
 		});
+
+		
+		
+		
+		
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 0);
 		gbc_btnNewButton.gridwidth = 2;
@@ -167,6 +185,16 @@ public class RoomSwingView extends JFrame implements RoomView {
 		
 		
 		btnDeleteSelected = new JButton("Delete Selected");
+		btnDeleteSelected.setName("deleteButton");
+		btnDeleteSelected.addActionListener(e -> {
+		    if (roomController != null && roomList.getSelectedValue() != null) {
+		        roomController.vacateRoom(roomList.getSelectedValue().getRoomNumber());
+		    }
+		});
+
+		
+		
+		
 		btnDeleteSelected.setEnabled(false);
 		GridBagConstraints gbc_btnDeleteSelected= new GridBagConstraints();
 		gbc_btnDeleteSelected.insets = new Insets(0, 0, 5, 0);
