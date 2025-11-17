@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -185,8 +186,10 @@ public class RoomSwingView extends JFrame implements RoomView {
 
 
 	@Override
-	public void showRoom(Room room) {
-		// TODO Auto-generated method stub
+	public void showAllRooms(List<Room> rooms) {
+		rooms.stream().forEach(roomListModel::addElement);
+		
+		
 		
 	}
 
@@ -213,6 +216,15 @@ public class RoomSwingView extends JFrame implements RoomView {
 
 	@Override
 	public void roomVacated(Room room) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+	@Override
+	public void showRoom(Room room) {
 		// TODO Auto-generated method stub
 		
 	}

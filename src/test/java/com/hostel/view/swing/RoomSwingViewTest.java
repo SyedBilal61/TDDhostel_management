@@ -1,5 +1,9 @@
 package com.hostel.view.swing;
 
+import static org.junit.Assert.assertThat;
+
+import java.util.Arrays;
+
 import org.assertj.swing.annotation.GUITest;
 import org.assertj.swing.core.matcher.JButtonMatcher;
 import org.assertj.swing.core.matcher.JLabelMatcher;
@@ -11,6 +15,7 @@ import org.assertj.swing.junit.runner.GUITestRunner;
 import org.assertj.swing.junit.testcase.AssertJSwingJUnitTestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import hostel_management.Room;
 
@@ -125,6 +130,37 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
     	deleteButton.requireDisabled();
     	
     }
-}	
+    //Interface Implementation Tests 
+    
+   
+    @Test
+    public void testShowAllRoomsShouldAddRoomDescriptionsToTheList() {
+    	
+    	
+    	Room room1 = new Room ("A1");
+    	Room room2 = new Room ("A2");
+    	
+    	GuiActionRunner.execute(() -> 
+    	   roomSwingView.showAllRooms(Arrays.asList(room1 , room2))
+    	   
+    	   );
+    	
+    	String[] listContents = window.list("roomList").contents();
+    	
+    	assertThat(listContents)
+    	    .containsExactly(room1.toString(),room2.toString());
+    			
+    	
+    }
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    }
+
     	
     
