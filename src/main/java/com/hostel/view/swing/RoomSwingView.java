@@ -218,10 +218,9 @@ public class RoomSwingView extends JFrame implements RoomView {
 
 	@Override
 	public void showAllRooms(List<Room> rooms) {
-		rooms.stream().forEach(roomListModel::addElement);
-		
-		
-		
+	    roomListModel.clear();            // clear old entries
+	    rooms.forEach(roomListModel::addElement);  // add new rooms
+	    resetErrorLabel();                // clear error label
 	}
 
 
@@ -239,26 +238,9 @@ public class RoomSwingView extends JFrame implements RoomView {
 	@Override
 	public void tenantAssigned(Room room, String tenantName) {
 		
-		//Assign Tenant If Available 
-		if (room.isAvailable()) {
-			room.assignTenant(tenantName);
-			
-		}
-
+		roomListModel.clear();
+		roomListModel.addElement(room);
 		
-		
-		 // Add room if not already in the list (by roomNumber)
-		boolean exists = false ;
-		for (int i= 0; i < roomListModel.size(); i++) {
-			if (roomListModel.get(i).getRoomNumber().equals(room.getRoomNumber())) {
-				exists = true ;
-				break;
-			}
-		}
-		if (!exists) {
-			roomListModel.addElement(room);
-		}
-	
 	    resetErrorLabel();
 		
 	}
@@ -268,9 +250,7 @@ public class RoomSwingView extends JFrame implements RoomView {
 
 	@Override
 	public void roomVacated(Room room) {
-		//vacate the room(set tenant to empty)
 		
-		room.vacate();
 		
 	// Remove the room from the list by room number 
 		
