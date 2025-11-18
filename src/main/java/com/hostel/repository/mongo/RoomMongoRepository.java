@@ -8,13 +8,15 @@ import java.util.stream.StreamSupport;
 
 import org.bson.Document;
 
+import com.hostel.repository.RoomRepository;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 import hostel_management.Room;
 
-public class RoomMongoRepository {
+public class RoomMongoRepository  implements RoomRepository
+{
 
     private static final String ROOM_DB_NAME = "hosteldb";
     private static final String ROOM_COLLECTION_NAME = "rooms";
@@ -59,4 +61,11 @@ public class RoomMongoRepository {
         room.assignTenant(doc.getString("tenant"));
         return room;
     }
+
+
+	@Override
+	public Room findById(String roomName) {
+		// TODO Auto-generated method stub
+		return findByRoomNumber(roomName);
+	}
 }
