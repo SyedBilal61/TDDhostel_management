@@ -62,7 +62,7 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
     public void testWhenRoomIdAndTenantNameAreNotEmptyThenAddButtonShouldBeEnabled() {
     	
         window.textBox("roomIdTextBox").enterText("A1");
-        window.textBox("nameTextBox").enterText("Zain");
+        window.textBox("nameTextBox").enterText("zain");
         window.button(JButtonMatcher.withText("Add")).requireEnabled();
     	
     	
@@ -84,7 +84,7 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
 
         // Case 2: ROOM id is spaces/blank, name filled
         idTextBox.enterText("   "); // spaces
-        nameTextBox.enterText("ZAIN");
+        nameTextBox.enterText("zain");
         window.button(JButtonMatcher.withText("Add")).requireDisabled();
 
         // Case 3: both fields are spaces
@@ -101,7 +101,7 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
     public void testTheButtonDeleteShouldBeEnabledOnlyAfterSelectionARoomIsSelectedFromList() {
     	
     	Room room = new Room("A1");
-    	room.assignTenant("Zain");
+    	room.assignTenant("zain");
     	
     	
     	
