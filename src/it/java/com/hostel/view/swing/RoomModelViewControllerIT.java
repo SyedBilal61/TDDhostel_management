@@ -75,10 +75,15 @@ public class RoomModelViewControllerIT extends AssertJSwingJUnitTestCase {
 	protected void onTearDown() {
 		mongoClient.close();
 	}
+	
+	
+	
+	
 	@Test
 	@GUITest
 	public void testShowErrorShouldDisplayErrorMessageOnUI() {
-	    // Use the window's target to get the JFrame (the RoomSwingView)
+	   
+		// Use the window's target to get the JFrame (the RoomSwingView)
 	    GuiActionRunner.execute(() -> {
 	        ((RoomSwingView) window.target()).showError("Something went wrong", null);
 	    });
