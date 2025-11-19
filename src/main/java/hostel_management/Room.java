@@ -1,6 +1,8 @@
 package hostel_management;
 
 public class Room {
+	
+	
 	private String roomNumber;
 	private boolean available = true;
 	private String tenant;
