@@ -30,15 +30,6 @@ public class RoomMongoRepository  implements RoomRepository
     }
     
     
-    
-    
-    public void dropAll() {
-       
-            roomCollection.drop();
-    }
-    
-    
-    
     @Override
     public List<Room> findAll() {
         return StreamSupport.stream(roomCollection.find().spliterator(), false)
