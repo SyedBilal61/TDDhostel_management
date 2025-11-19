@@ -10,7 +10,7 @@ public interface RoomView {
     // Show details of a single room
     void showRoom(Room room);
 
- // Show details of a All room
+     // Show details of a All room
     void showAllRooms(List<Room> rooms);
     
     
