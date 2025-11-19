@@ -8,9 +8,10 @@ public interface RoomRepository {
 
 	List<Room> findAll();
     
-	Room findById(String roomName);
+	Room findByRoomNumber(String roomNumber);
     
 	void save(Room room);
   
-    void delete(String roomName); 
+    void vacate(String roomNumber);
+    
   }
