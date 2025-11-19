@@ -1,10 +1,9 @@
 package com.hostel.view.swing;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -229,6 +228,7 @@ public class RoomSwingView extends JFrame implements RoomView {
 	@Override
 	public void showError(String message, Room room) {
 		lblNewLabel_2.setText(message+ ": " + room);
+		lblNewLabel_2.setForeground(Color.RED); // make the error message red
 		
 	}
 
