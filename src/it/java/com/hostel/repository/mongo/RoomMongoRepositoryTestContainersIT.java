@@ -145,11 +145,20 @@ public class RoomMongoRepositoryTestContainersIT {
     
     
     @Test 
-    public void testDelete () {
+    public void testvacate () {
     	addTestRoomToDataBase("A1", "Zain");
-    	roomRepository.delete("A1");
-    	assertThat(roomRepository.findByRoomNumber("A1"))
-    	  .isNull();
+    	roomRepository.vacate("A1");
+    	
+    	
+       Room r = roomRepository.findByRoomNumber("A1");
+       assertThat(r).isNotNull();       //the room still exists
+       assertThat(r.getTenant()).isNull();   //tenant should be null
+       assertThat(r.isAvailable()).isTrue();  // room should be availble 
+    		   
+    		   
+    		   
+    		   
+    		   
     }
     
     
