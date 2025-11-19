@@ -46,7 +46,7 @@ public class RoomControllerTest {
 
     @Test
     public void testAllRooms() {
-        List<Room> rooms = Arrays.asList(new Room("R1"));
+        List<Room> rooms = Arrays.asList(new Room("A1"));
         when(roomRepository.findAll()).thenReturn(rooms);
 
         roomController.allRooms();
@@ -56,23 +56,23 @@ public class RoomControllerTest {
 
     @Test
     public void testAssignTenantSuccessfully() {
-        Room room = new Room("R1");
-        when(roomRepository.findById("R1")).thenReturn(room);
+        Room room = new Room("B1");
+        when(roomRepository.findByRoomNumber("B1")).thenReturn(room);
 
-        roomController.assignTenant("R1", "Ali");
+        roomController.assignTenant("B1", "Ali");
 
         InOrder inOrder = inOrder(roomRepository, roomView);
         inOrder.verify(roomRepository).save(room);
         inOrder.verify(roomView).tenantAssigned(room, "Ali");
 
-        assertThat(room.getTenant().contains("Ali")).isTrue();
+        assertThat(room.getTenant()).isEqualTo("Ali");
     }
 
     @Test
     public void testAssignTenantToOccupiedRoomShowsError() {
         Room room = new Room("R1");
         room.assignTenant("Ali"); // occupy the room
-        when(roomRepository.findById("R1")).thenReturn(room);
+        when(roomRepository.findByRoomNumber("R1")).thenReturn(room);
 
         roomController.assignTenant("R1", "Zain");
 
@@ -83,7 +83,7 @@ public class RoomControllerTest {
     public void testVacateRoomSuccessfully() {
         Room room = new Room("R1");
         room.assignTenant("Ali");
-        when(roomRepository.findById("R1")).thenReturn(room);
+        when(roomRepository.findByRoomNumber("R1")).thenReturn(room);
 
         roomController.vacateRoom("R1");
 
@@ -96,18 +96,18 @@ public class RoomControllerTest {
 
     @Test
     public void testAssignTenantToNonExistingRoom() {
-        when(roomRepository.findById("X")).thenReturn(null);
+        when(roomRepository.findByRoomNumber("A1")).thenReturn(null);
 
-        roomController.assignTenant("X", "Ali");
+        roomController.assignTenant("A1", "Ali");
 
         verify(roomView).showError("Room not found", null);
     }
 
     @Test
     public void testVacateRoomAndRoomNotFound() {
-        when(roomRepository.findById("X")).thenReturn(null);
+        when(roomRepository.findByRoomNumber("A1")).thenReturn(null);
 
-        roomController.vacateRoom("X");
+        roomController.vacateRoom("A1");
 
         verify(roomView).showError("Room not found", null);
     }
