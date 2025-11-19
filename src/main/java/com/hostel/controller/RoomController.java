@@ -22,8 +22,13 @@ public class RoomController {
     }
 
     // Assign a tenant to a room
-    public void assignTenant(String roomId, String tenantName) {
-        Room room = roomRepository.findById(roomId);
+    public void assignTenant(String roomNumber, String tenantName) {
+
+    	
+    	//try to find the room in the repository
+    	Room room = roomRepository.findByRoomNumber(roomNumber);
+    	
+    	//if does not exists create this 
 
         if (room == null) {
             roomView.showError("Room not found", null);
@@ -40,8 +45,8 @@ public class RoomController {
     }
 
     // Vacate a room
-    public void vacateRoom(String roomId) {
-        Room room = roomRepository.findById(roomId);
+    public void vacateRoom(String roomNumber) {
+        Room room = roomRepository.findByRoomNumber(roomNumber);
 
         if (room == null) {
             roomView.showError("Room not found", null);
