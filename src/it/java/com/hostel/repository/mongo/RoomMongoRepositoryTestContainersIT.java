@@ -154,12 +154,12 @@ public class RoomMongoRepositoryTestContainersIT {
        assertThat(r).isNotNull();       //the room still exists
        assertThat(r.getTenant()).isNull();   //tenant should be null
        assertThat(r.isAvailable()).isTrue();  // room should be availble 
-    		   
-    		   
-    		   
-    		   
-    		   
+    		  		   
     }
+    
+  
+    
+    
     
     
     }
