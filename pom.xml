@@ -162,32 +162,75 @@
         </argLine>
     </configuration>
 </plugin>
+
 <plugin>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>3.7.1</version>
-            </plugin>
-            <plugin>
-            <groupId>org.pitest</groupId>
-            <artifactId>pitest-maven</artifactId>
-            <version>1.7.0</version>
-            <configuration>
-                <targetClasses>
-                    <param>hostel_management.*</param>
-         
-                </targetClasses>
-                <targetTests>
-                    <param>hostel_management.*</param>
-                </targetTests>
-               <outputFormats>
-      <param>HTML</param>
-      <param>XML</param>
-    </outputFormats>
-                <mutators>
-                    <mutator>DEFAULTS</mutator>
-                </mutators>
-                <mutationThreshold>80</mutationThreshold>
-            </configuration>
-        </plugin>
+    <groupId>org.pitest</groupId>
+    <artifactId>pitest-maven</artifactId>
+    <version>1.15.8</version>
+
+    <configuration>
+        <!-- Production classes to mutate -->
+        <targetClasses>
+            <param>com.hostel.*</param>
+            <param>hostel_management.*</param>
+        </targetClasses>
+
+        <!-- Test classes (PIT uses them to kill mutants) -->
+        <targetTests>
+            <param>com.hostel.*</param>
+            <param>hostel_management.*</param>
+        </targetTests>
+
+        <!-- OPTIONAL: Exclude simple POJOs or GUI classes -->
+        <excludedClasses>
+            <param>*.model.*</param>
+            <param>*POJO*</param>
+            <param>*DTO*</param>
+            <param>*Swing*</param>
+            <param>*View*</param>
+        </excludedClasses>
+
+        <!-- Mutation operators -->
+        <mutators>
+            <mutator>STRONGER</mutator>
+        </mutators>
+
+        <!-- Output formats -->
+        <outputFormats>
+            <param>HTML</param>
+            <param>XML</param>
+        </outputFormats>
+
+        <!-- Threshold you want -->
+        <mutationThreshold>80</mutationThreshold>
+
+        <!-- Avoids TIMEOUT errors -->
+        <timeoutConst>4000</timeoutConst>
+    </configuration>
+</plugin>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <plugin>
       <groupId>org.jacoco</groupId>
       <artifactId>jacoco-maven-plugin</artifactId>
