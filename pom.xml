@@ -238,7 +238,20 @@
       <configuration>
         <excludes>
           <exclude>**/Main.*</exclude>
+          <exclude>**/*POJO.*</exclude>     <!-- Plain Old Java Objects, getters/setters -->
+            
+            <exclude>**/*Swing.*</exclude>    <!-- GUI classes, no business logic -->
+            <exclude>**/*View.*</exclude>     <!-- GUI/View classes, not part of main logic -->  
+            
+            
+            <!-- Exclude all test classes -->
+    <exclude>**/Test*</exclude>
+    <exclude>**/*IT*</exclude>
+            
         </excludes>
+        
+        
+        <outputDirectory>${project.build.directory}/jacoco-report</outputDirectory>
       </configuration>
       <executions>
         <execution>
@@ -261,7 +274,7 @@
                   <limit>
                     <counter>LINE</counter>
                     <value>COVEREDRATIO</value>
-                    <minimum>0.50</minimum>
+                    <minimum>0.80</minimum>
                   </limit>
                 </limits>
               </rule>
