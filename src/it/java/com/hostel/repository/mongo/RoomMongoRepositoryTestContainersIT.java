@@ -157,6 +157,40 @@ public class RoomMongoRepositoryTestContainersIT {
     		  		   
     }
     
+    //The Following Tests are introduced to Improve the code Coverage
+    
+    @Test
+    public void testFindByRoomNumberNotFound() {
+        Room result = roomRepository.findByRoomNumber("NON_EXISTENT");
+        assertThat(result).isNull();  
+    }
+    
+   
+    
+    @Test
+    public void testFromDocumentToRoomVacateBranches() {
+        // Empty tenant
+        addTestRoomToDataBase("B1", "");
+        Room r1 = roomRepository.findByRoomNumber("B1");
+        assertThat(r1.getTenant()).isNull();  
+
+        // Null tenant
+        addTestRoomToDataBase("B2", null);
+        Room r2 = roomRepository.findByRoomNumber("B2");
+        assertThat(r2.getTenant()).isNull();  
+    }
+
+   
+    
+    @Test
+    public void testVacateNonExistentRoom() {
+        // Should do nothing, just safe execution
+        roomRepository.vacate("NON_EXISTENT");  
+    }
+
+    
+
+    
   
     
     
