@@ -492,7 +492,31 @@
     </plugins>
   </build>
 </profile>
-  
+ 
+  <profile>
+    <id>jacoco</id>
+    <build>
+      <plugins>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.11</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>prepare-agent</goal>
+                <goal>report</goal>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </build>
+  </profile>
+ 
+ 
+ 
   
 
 </profiles>
