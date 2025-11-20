@@ -156,10 +156,9 @@
     <configuration>
         <includes>
             <include>**/*Test.java</include>
-        </includes><argLine>
-            --add-opens java.base/java.util=ALL-UNNAMED
-            --add-opens java.base/java.lang=ALL-UNNAMED
-        </argLine>
+        </includes>
+            <argLine>${argLine}</argLine> <!-- this allows JaCoCo to attach to test JVMs -->
+        
     </configuration>
 </plugin>
 
@@ -209,95 +208,52 @@
     </configuration>
 </plugin>
 
+
 <plugin>
-    <groupId>org.jacoco</groupId>
-    <artifactId>jacoco-maven-plugin</artifactId>
-    <version>0.8.11</version>
-
-    <configuration>
-        <!-- Exclude trivial or non-business logic classes -->
-        <excludes>
-            <exclude>hostel_management/Main*</exclude>   <!-- Main class -->
-            <exclude>**/*POJO*</exclude>               <!-- Plain Old Java Objects, getters/setters -->
-            <exclude>**/*DTO*</exclude>                <!-- DTO classes -->
-            <exclude>**/*Swing*</exclude>              <!-- GUI classes, no business logic -->
-            <exclude>**/*View*</exclude>               <!-- GUI/View classes, not part of main logic -->
-            
-            <!-- Exclude all test classes -->
-            <exclude>**/*Test*</exclude>
-            <exclude>**/*IT*</exclude>
-        </excludes>
-
-        <!-- Output report directory -->
-        <outputDirectory>${project.build.directory}/jacoco-report</outputDirectory>
-    </configuration>
-<executions>
-    <!-- 1️⃣ Attach JaCoCo agent before tests -->
-    <execution>
-        <id>prepare-agent</id>
-        <phase>initialize</phase>
-        <goals>
-            <goal>prepare-agent</goal>
-        </goals>
-    </execution>
-
-    <!-- 2️⃣ Generate report after tests -->
-    <execution>
-        <id>report</id>
-        <phase>verify</phase>
-        <goals>
-            <goal>report</goal>
-        </goals>
-    </execution>
-
-    <!-- 3️⃣ Check coverage threshold -->
-    <execution>
-        <id>jacoco-check</id>
-        <goals>
-            <goal>check</goal>
-        </goals>
-        <configuration>
-            <rules>
-                <rule>
-                    <element>PACKAGE</element>
-                    <limits>
-                        <limit>
-                            <counter>LINE</counter>
-                            <value>COVEREDRATIO</value>
-                            <minimum>0.80</minimum>
-                        </limit>
-                    </limits>
-                </rule>
-            </rules>
-        </configuration>
-    </execution>
-</executions>
-
-
-
-
-</plugin>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.12</version>
+            <configuration>
+                <excludes>
+                    <exclude>**/Main.*</exclude>
+                    <exclude>**/view/swing/**</exclude>
+                </excludes>
+            </configuration>
+            <executions>
+                <execution>
+                    <id>prepare-agent</id>
+                    <goals>
+                        <goal>prepare-agent</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>report</id>
+                    <goals>
+                        <goal>report</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>jacoco-check</id>
+                    <goals>
+                        <goal>check</goal>
+                    </goals>
+                    <configuration>
+                        <rules>
+                            <rule>
+                                <element>PACKAGE</element>
+                                <limits>
+                                    <limit>
+                                        <counter>LINE</counter>
+                                        <value>COVEREDRATIO</value>
+                                        <minimum>0.80</minimum>
+                                    </limit>
+                                </limits>
+                            </rule>
+                        </rules>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
 
 
 
@@ -492,29 +448,6 @@
     </plugins>
   </build>
 </profile>
- 
-  <profile>
-    <id>jacoco</id>
-    <build>
-      <plugins>
-        <plugin>
-          <groupId>org.jacoco</groupId>
-          <artifactId>jacoco-maven-plugin</artifactId>
-          <version>0.8.11</version>
-          <executions>
-            <execution>
-              <goals>
-                <goal>prepare-agent</goal>
-                <goal>report</goal>
-                <goal>check</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
-    </build>
-  </profile>
- 
  
  
   
