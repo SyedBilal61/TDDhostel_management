@@ -303,7 +303,7 @@
             </executions>
         </plugin>
         
-<!-- add plugin for understaning maven about the integration tests -->
+<!-- add plugin for understaning maven about the integration tests   -->
         
    <plugin>
     <groupId>org.codehaus.mojo</groupId>
@@ -325,21 +325,74 @@
     </executions>
 </plugin>
 
-<!-- add a plugin to for intergataion test -->
+<!-- add a plugin  for intergataion test and E2E -->
 
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-failsafe-plugin</artifactId>
     <version>2.22.1</version>
     <executions>
+        <!-- Integration Tests -->
         <execution>
+            <id>default-it</id>
             <goals>
                 <goal>integration-test</goal>
                 <goal>verify</goal>
             </goals>
+            <configuration>
+                <includes>
+                    <include>**/*IT.java</include>
+                </includes>
+            </configuration>
+        </execution>
+
+        <!-- E2E Tests -->
+        <execution>
+            <id>e2e-tests</id>
+            <goals>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
+            </goals>
+            <configuration>
+                <includes>
+                    <include>**/*E2E.java</include>
+                </includes>
+                <excludes>
+                    <exclude>**/*IT.java</exclude>
+                </excludes>
+            </configuration>
         </execution>
     </executions>
 </plugin>
+
+
+
+<!-- add plugin for understaning maven about the E2E   tests  -->
+
+<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>build-helper-maven-plugin</artifactId>
+    <version>3.0.0</version>
+    <executions>
+        <execution>
+            <id>add-e2e-test-source</id>
+            <phase>generate-test-sources</phase>
+            <goals>
+                <goal>add-test-source</goal>
+            </goals>
+            <configuration>
+                <sources>
+                    <source>src/e2e/java</source>
+                </sources>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+
+
+
+
+
      
         </plugins>
  </build>
