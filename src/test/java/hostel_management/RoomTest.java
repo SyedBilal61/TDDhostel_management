@@ -1,5 +1,6 @@
 package hostel_management;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -34,4 +35,8 @@ public class RoomTest {
 		room.assignTenant("Zain"); //2nd
 		
 	}
+
+
+
+
 }
