@@ -1,64 +1,64 @@
 package com.hostel.app.swing;
 
 import java.awt.EventQueue;
+import java.util.concurrent.Callable;
 
 import com.hostel.controller.RoomController;
 import com.hostel.repository.mongo.RoomMongoRepository;
+import com.hostel.view.swing.RoomSwingView;
 
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
 
-import com.hostel.view.swing.RoomSwingView;
+import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
 
 
- /* This sets up the MongoDB connection, repository, controller, and view.
- */
 
 
 
-public class HostelSwingApp {
+@Command(mixinStandardHelpOptions = true)
+public class HostelSwingApp implements Callable<Void> {
+
+    @Option(names = {"--mongo-host"}, description = "MongoDB host address")
+    private String mongoHost = "localhost";
+
+    @Option(names = {"--mongo-port"}, description = "MongoDB host port")
+    private int mongoPort = 27017;
+
+    @Option(names = {"--db-name"}, description = "Database name")
+    private String databaseName = "hostel";
+
+    @Option(names = {"--db-collection"}, description = "Collection name")
+    private String collectionName = "rooms";
 
     public static void main(String[] args) {
+        new CommandLine(new HostelSwingApp()).execute(args);
+    }
 
+    @Override
+    public Void call() throws Exception {
         EventQueue.invokeLater(() -> {
             try {
-                // Default MongoDB host and port
-                String mongoHost = "localhost";
-                int mongoPort = 27017;
+                MongoClient client =
+                        new MongoClient(new ServerAddress(mongoHost, mongoPort));
 
-                // Override host and port if provided as command-line arguments
-                if (args.length > 0) {
-                    mongoHost = args[0];
-                }
-                if (args.length > 1) {
-                    mongoPort = Integer.parseInt(args[1]);
-                }
+                RoomMongoRepository repository =
+                        new RoomMongoRepository(client, databaseName, collectionName);
 
-                // Create Mongo client
-                MongoClient mongoClient = new MongoClient(new ServerAddress(mongoHost, mongoPort));
+                RoomSwingView view = new RoomSwingView();
+                RoomController controller =
+                        new RoomController(view, repository);
 
-                // Create repository with database and collection names
-                RoomMongoRepository roomRepository = new RoomMongoRepository(
-                        mongoClient, "hosteldb", "rooms");
-
-                // Create the Swing view
-                RoomSwingView roomView = new RoomSwingView();
-
-                // Create controller and wire it with view and repository
-                RoomController roomController = new RoomController(roomView, roomRepository);
-
-                // Set controller in the view
-                roomView.setRoomController(roomController);
-
-                // Make the view visible
-                roomView.setVisible(true);
-
-                // Load all rooms initially
-                roomController.allRooms();
+                view.setRoomController(controller);
+                view.setVisible(true);
+                controller.allRooms();
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
+        return null;
     }
 }
