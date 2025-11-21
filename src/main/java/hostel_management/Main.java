@@ -9,6 +9,16 @@ import com.mongodb.client.MongoDatabase;
 /**
  * Simple app accessing MongoDB.
  */
+
+
+
+
+/**The Main.java in hostel_management 
+is a standalone MongoDB demo to test connectivity. 
+The real entry point for the application is RoomSwingApp in com.hostel.app.swing.*/
+
+
+
 public class Main {
 	public static void main(String[] args) {
         String mongoHost = "localhost";//or mongoDB when running through docker
