@@ -19,16 +19,14 @@ import hostel_management.Room;
 public class RoomMongoRepository  implements RoomRepository
 {
 
-    private static final String ROOM_DB_NAME = "hosteldb";
-    private static final String ROOM_COLLECTION_NAME = "rooms";
-
+   
     private final MongoCollection<Document> roomCollection;
 
-    public RoomMongoRepository(MongoClient client) {
-        MongoDatabase database = client.getDatabase(ROOM_DB_NAME);
-        this.roomCollection = database.getCollection(ROOM_COLLECTION_NAME);
+    public RoomMongoRepository(MongoClient client, String databaseName, String collectionName) {
+        MongoDatabase database = client.getDatabase(databaseName);
+        this.roomCollection = database.getCollection(collectionName);
     }
-    
+
     
     @Override
     public List<Room> findAll() {
