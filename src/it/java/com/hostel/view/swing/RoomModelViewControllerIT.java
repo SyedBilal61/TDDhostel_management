@@ -45,9 +45,13 @@ public class RoomModelViewControllerIT extends AssertJSwingJUnitTestCase {
 		// Connect to MongoDBContainer
 		mongoClient = new MongoClient(new ServerAddress(mongo.getHost(), mongo.getFirstMappedPort()));
 
-		// Intialize Repository
-		roomRepository = new RoomMongoRepository(mongoClient);
-
+		 //first created for IT and now update constructer with DB and collection for E2E
+		String testDb = "it-db";
+		String testCollection= "it-rooms";
+		
+		roomRepository = new RoomMongoRepository(mongoClient, testDb, testCollection);
+		
+		
 		// clean dataBase for each test
 
 		for (Room r : roomRepository.findAll()) {
