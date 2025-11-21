@@ -52,7 +52,7 @@ public class RoomMongoRepositoryTestContainersIT {
         //clean database for eachtest
         database = client.getDatabase(testDb);
         database.drop();
-        roomCollection =database.getCollection(testCollection);
+        roomCollection = database.getCollection(testCollection);
         
     }
         
