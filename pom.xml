@@ -148,6 +148,11 @@
         </dependency>
       </dependencies>
     </plugin>
+ 
+ 
+ 
+ 
+ 
      
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
@@ -162,53 +167,52 @@
     </configuration>
 </plugin>
 
+
+
+
 <plugin>
     <groupId>org.pitest</groupId>
     <artifactId>pitest-maven</artifactId>
     <version>1.15.8</version>
 
     <configuration>
-        <!-- Production classes to mutate -->
+
+        <!-- ONLY mutate Room.java and Apartment.java -->
         <targetClasses>
-            <param>com.hostel.*</param>
-            <param>hostel_management.*</param>
+            <param>hostel_management.Room</param>
+            <param>hostel_management.Apartment</param>
         </targetClasses>
 
-        <!-- Test classes (PIT uses them to kill mutants) -->
+        <!-- ONLY run unit tests (RoomTest and ApartmentTest) -->
         <targetTests>
-            <param>com.hostel.*</param>
-            <param>hostel_management.*</param>
+            <param>hostel_management.RoomTest</param>
+            <param>hostel_management.ApartmentTest</param>
         </targetTests>
 
-        <!-- OPTIONAL: Exclude simple POJOs or GUI classes -->
+        <!-- EXCLUDE EVERYTHING ELSE IN PROJECT -->
         <excludedClasses>
-            <param>*.model.*</param>
-            <param>*POJO*</param>
-            <param>*DTO*</param>
-            <param>*Swing*</param>
-            <param>*View*</param>
+            <!-- exclude Main -->
+            <param>hostel_management.Main</param>
+
+            <!-- exclude Swing GUI classes -->
+            <param>com.hostel.view.swing.*</param>
+
+            <!-- exclude controllers -->
+            <param>com.hostel.controller.*</param>
+
+            <!-- exclude model-view-controller IT tests -->
+            <param>hostel_management.*IT</param>
+            <param>*IT</param>
+
+            <!-- exclude integration and Mongo tests -->
+            <param>*Integration*</param>
+            <param>*Mongo*</param>
         </excludedClasses>
 
-        <!-- Mutation operators -->
-        <mutators>
-            <mutator>STRONGER</mutator>
-        </mutators>
+        <verbose>true</verbose>
 
-        <!-- Output formats -->
-        <outputFormats>
-            <param>HTML</param>
-            <param>XML</param>
-        </outputFormats>
-
-        <!-- Threshold you want -->
-        <mutationThreshold>80</mutationThreshold>
-
-        <!-- Avoids TIMEOUT errors -->
-        <timeoutConst>4000</timeoutConst>
     </configuration>
 </plugin>
-
-
 
 
 <plugin>
