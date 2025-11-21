@@ -31,15 +31,7 @@ public class RoomMongoRepositoryTestContainersIT {
     private RoomMongoRepository roomRepository;
     private MongoCollection<Document> roomCollection;
     private MongoDatabase database;
-
-    
-    
-    private static final String ROOM_DB_NAME = "hosteldb";
-    private static final String ROOM_COLLECTION_NAME= "rooms";
-    
-    
-    
-    
+   
     
     @Before
     
@@ -52,11 +44,16 @@ public class RoomMongoRepositoryTestContainersIT {
         )
         );
         
-        roomRepository = new RoomMongoRepository(client);
-        database =client.getDatabase(ROOM_DB_NAME);
+       //first created for IT and now update constructer with DB and collection for E2E
+        String testDb = "test-db";
+        String testCollection = "test-rooms";
+        roomRepository = new RoomMongoRepository(client, testDb, testCollection);
+        
+        //clean database for eachtest
+        database = client.getDatabase(testDb);
         database.drop();
-        roomCollection = database.getCollection(ROOM_COLLECTION_NAME);
-    
+        roomCollection =database.getCollection(testCollection);
+        
     }
         
            
