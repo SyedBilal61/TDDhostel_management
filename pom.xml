@@ -11,6 +11,7 @@
     <junit.version>4.13.2</junit.version>
     <log4j.version>2.23.1</log4j.version>
     <testcontainers.version>1.15.1</testcontainers.version>
+    <cucumber.version>5.5.0</cucumber.version> 
  	</properties>
 
 <dependencies>
@@ -99,6 +100,24 @@
     <artifactId>picocli</artifactId>
     <version>4.6.1</version>
 </dependency>
+
+<!-- Cucumber JUnit integration -->
+    <dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>cucumber-junit</artifactId>
+        <version>${cucumber.version}</version>
+        <scope>test</scope>
+    </dependency>
+    <!-- Cucumber core for Java -->
+    <dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>cucumber-java</artifactId>
+        <version>${cucumber.version}</version>
+        <scope>test</scope> <!-- only used for testing -->
+    </dependency>
+
+
+
 
 
 </dependencies>
@@ -327,14 +346,37 @@
                 <sources>
                     <source>src/it/java</source>
                     <source>src/e2e/java</source>
+                    <source>src/bdd/java</source>
                     
                 </sources>
+            </configuration>
+        </execution>
+        <execution>
+            <id>add-test-resource</id>
+            <phase>generate-test-resources</phase>
+            <goals>
+                <goal>add-test-resource</goal>
+            </goals>
+            <configuration>
+                <resources>
+                    <resource>
+                        <directory>src/bdd/resources</directory> <!--  BDD feature files -->
+                    </resource>
+                </resources>
             </configuration>
         </execution>
     </executions>
 </plugin>
 
-<!-- add a plugin  for intergataion test and E2E -->
+
+
+
+
+
+
+
+
+<!-- add a plugin  for intergataion test and E2E and BDD -->
 
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
@@ -371,6 +413,29 @@
                 </excludes>
             </configuration>
         </execution>
+        
+        
+        <!-- BDD TESTs-->
+        
+        <execution>
+    <id>bdd-tests</id>
+    <goals>
+        <goal>integration-test</goal>
+        <goal>verify</goal>
+    </goals>
+    <configuration>
+        <excludes>
+            <exclude>**/*IT.java</exclude> <!-- skip regular IT tests -->
+        </excludes>
+        <includes>
+            <include>**/*BDD.java</include> <!-- run only BDD tests -->
+        </includes>
+    </configuration>
+</execution>
+        
+        
+        
+        
     </executions>
 </plugin>
 
