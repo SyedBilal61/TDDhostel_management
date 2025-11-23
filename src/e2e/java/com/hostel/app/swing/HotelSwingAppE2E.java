@@ -164,7 +164,7 @@ public class HotelSwingAppE2E extends AssertJSwingJUnitTestCase {
     	
     	//enter a duplicate room info
     	window.textBox("roomIdTextBox").enterText(ROOM_FIXTURE_1_NUMBER);
-    	window.textBox("nameTextBox").enterText("Someone Else");
+    	window.textBox("nameTextBox").enterText("marco");
     	
     	
     	

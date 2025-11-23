@@ -240,20 +240,33 @@ public class RoomSwingView extends JFrame implements RoomView {
 		
 	}
 
-
-
-
-	@Override
+	
+	
+	//fixes for UI ,Frame Logic , earliar the list was disappeared automatucally 
+	//and the newly add tenant showed so this update the list ,
+	
+	
+	@Override 
 	public void tenantAssigned(Room room, String tenantName) {
+		//check if the room already exist in the list 
+		boolean exists = false;
+		for (int i=0;  i<roomListModel.size(); i++) {
+			if (roomListModel.get(i).getRoomNumber().equals(room.getRoomNumber())) {
+				//update the list 
+			roomListModel.set(i,room);
+			exists = true;
+			break;
+			}
+			
+		}
 		
-		roomListModel.clear();
-		roomListModel.addElement(room);
+		if(!exists) {
+			roomListModel.addElement(room);
+		}
 		
-	    resetErrorLabel();
+		resetErrorLabel();
 		
 	}
-
-
 
 
 	@Override
