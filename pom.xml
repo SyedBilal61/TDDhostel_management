@@ -249,6 +249,7 @@
         <excludes>
             <exclude>**/Main.*</exclude>
             <exclude>**/view/swing/**</exclude>
+            <exclude>**/app/swing/HostelSwingApp*.*</exclude>
         </excludes>
     </configuration>
     <executions>
