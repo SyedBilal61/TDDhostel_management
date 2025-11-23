@@ -21,7 +21,7 @@ The real entry point for the application is RoomSwingApp in com.hostel.app.swing
 
 public class Main {
 	public static void main(String[] args) {
-        String mongoHost = "localhost";//or mongoDB when running through docker
+        String mongoHost = "mongodb";//or mongoDB when running through docker
         if (args.length > 0)
             mongoHost = args[0];
 

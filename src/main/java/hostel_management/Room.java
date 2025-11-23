@@ -40,7 +40,7 @@ public class Room {
 		if (tenant == null || tenant.isEmpty()) {
 			return roomNumber + " (Empty)" ; 
 			}
-		return roomNumber + tenant;	
+		return roomNumber + " " + tenant;	
 	}
 	
 	

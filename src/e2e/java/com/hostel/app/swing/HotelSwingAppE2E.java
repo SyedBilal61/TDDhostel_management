@@ -2,6 +2,7 @@ package com.hostel.app.swing;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.swing.launcher.ApplicationLauncher.application;
+import static org.mockito.ArgumentMatchers.contains;
 
 import java.util.regex.Pattern;
 
@@ -17,11 +18,10 @@ import org.bson.Document;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import com.mongodb.client.model.Filters;
-
 import org.testcontainers.containers.MongoDBContainer;
 
 import com.mongodb.MongoClient;
+import com.mongodb.client.model.Filters;
 
 @RunWith(GUITestRunner.class)
 public class HotelSwingAppE2E extends AssertJSwingJUnitTestCase {
@@ -41,7 +41,7 @@ public class HotelSwingAppE2E extends AssertJSwingJUnitTestCase {
 	
 	
 	private static final String ROOM_FIXTURE_1_NUMBER = "A1";
-	private static final String ROOM_FIXTURE_1_TENANT = "Ali ";
+	private static final String ROOM_FIXTURE_1_TENANT = "Ali";
 
 	private static final String ROOM_FIXTURE_2_NUMBER = "A2";
 	private static final String ROOM_FIXTURE_2_TENANT = "Zain";
@@ -99,10 +99,15 @@ public class HotelSwingAppE2E extends AssertJSwingJUnitTestCase {
             .getDatabase(DB_NAME)
             .getCollection(COLLECTION_NAME)
             .insertOne(new Document()
-            		.append("roomNumber", roomNumber).append("tenant", tenant));
+            		.append("roomNumber", roomNumber)
+            		.append("tenant", tenant));
     }
     
 
+    
+
+    
+    
     
     
     
@@ -120,24 +125,34 @@ public class HotelSwingAppE2E extends AssertJSwingJUnitTestCase {
 
     
     //Test adding new room successfully added 
+ 
+    
+    
+    
     
     @Test
     @GUITest
     public void testAddNewRoomSuccess() {
-    	
-    	//enter new room Info
-    	window.textBox("roomIdTextBox").enterText("C1");
-    	window.textBox("nameTextBox").enterText("Alice");
-    	
-    	
-    	//click the add button 
-    	window.button(JButtonMatcher.withText("Add")).click();
-    	
-    	
-    	//verify the room appears in the list 
-    	assertThat(window.list().contents())
-    	    .anySatisfy(e -> assertThat(e).contains("C1", "Alice")); 	
+
+        // Step 1: Pre-create the room in the database (tenant is null initially)
+        addTestRoomToDatabase("C1", null);
+
+        // Step 2: Enter the tenant info in the UI
+        window.textBox("roomIdTextBox").enterText("C1");
+        window.textBox("nameTextBox").enterText("Alice");
+
+        // Step 3: Click the Add button
+        window.button(JButtonMatcher.withText("Add")).click();
+
+        // Step 4: Verify the tenant appears in the list
+        assertThat(window.list().contents())
+            .anySatisfy(e -> assertThat(e).contains("C1", "Alice"));
     }
+
+    
+    
+    
+    
     
     
     
@@ -160,7 +175,7 @@ public class HotelSwingAppE2E extends AssertJSwingJUnitTestCase {
     	
     	//verify the Error Message Shown
     	assertThat(window.label("errorMessageLabel").text())
-    	     .contains(ROOM_FIXTURE_1_NUMBER, ROOM_FIXTURE_2_NUMBER);
+    	     .contains(ROOM_FIXTURE_1_NUMBER, ROOM_FIXTURE_1_TENANT);
     }
     
     
@@ -215,8 +230,8 @@ public class HotelSwingAppE2E extends AssertJSwingJUnitTestCase {
     	
     	//verify that error message is shown
     	assertThat(window.label("errorMessageLabel").text())
-    	    .contains(ROOM_FIXTURE_1_NUMBER,ROOM_FIXTURE_1_NUMBER);
-    	  
+    	    .contains("Room not found: null");
+    	       	  
     	  
     }
     

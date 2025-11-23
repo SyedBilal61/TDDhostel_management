@@ -34,7 +34,7 @@ public class HostelSwingApp implements Callable<Void> {
     private String collectionName = "rooms";
 
     public static void main(String[] args) {
-        new CommandLine(new HostelSwingApp()).execute(args);
+    	CommandLine.call(new HostelSwingApp(), args);
     }
 
     @Override
@@ -48,8 +48,9 @@ public class HostelSwingApp implements Callable<Void> {
                         new RoomMongoRepository(client, databaseName, collectionName);
 
                 RoomSwingView view = new RoomSwingView();
-                RoomController controller =
-                        new RoomController(view, repository);
+                RoomController controller =  new RoomController(view, repository);
+                controller.setAutoCreateRooms(true);   //for UI frame,rooms automatically when assigning a tenant
+                                                      // without pre-existing room in the database. Needed for GUI/E2E to work.
 
                 view.setRoomController(controller);
                 view.setVisible(true);

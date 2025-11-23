@@ -56,12 +56,18 @@ public class RoomSwingView extends JFrame implements RoomView {
 	
 	public RoomSwingView() {
 		setTitle("HostelView");
+		setSize(600, 400); // make the frame visible for e2e
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //close on exit
+	    
+	    
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
+		
+		
 		
 		JLabel lblNewLabel = new JLabel("RoomId");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
@@ -185,6 +191,7 @@ public class RoomSwingView extends JFrame implements RoomView {
 		
 		btnDeleteSelected = new JButton("Delete Selected");
 		btnDeleteSelected.setName("deleteButton");
+	    btnDeleteSelected.setEnabled(false); // ✅ initially disabled
 		btnDeleteSelected.addActionListener(e -> {
 		    if (roomController != null && roomList.getSelectedValue() != null) {
 		        roomController.vacateRoom(roomList.getSelectedValue().getRoomNumber());
@@ -204,6 +211,7 @@ public class RoomSwingView extends JFrame implements RoomView {
 		
 		lblNewLabel_2 = new JLabel(" ");
 		lblNewLabel_2.setName("errorMessageLabel");
+		lblNewLabel_2.setForeground(Color.RED);
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 		gbc_lblNewLabel_2.gridwidth = 2;
 		gbc_lblNewLabel_2.insets = new Insets(0, 0, 0, 5);
