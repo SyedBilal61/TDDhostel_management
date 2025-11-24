@@ -21,7 +21,7 @@
 <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 
    	</properties>
-<<!-- this comment is just to check the workflow of the sonarcloud -->
+<!-- this comment is just to check the workflow of the sonarcloud -->
 
 
 
