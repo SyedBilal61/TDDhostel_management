@@ -10,3 +10,4 @@
 
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=SyedBilal61_TDDhostel_management&metric=coverage)](https://sonarcloud.io/summary/new_code?id=SyedBilal61_TDDhostel_management)
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=SyedBilal61_TDDhostel_management&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=SyedBilal61_TDDhostel_management)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=SyedBilal61_TDDhostel_management&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=SyedBilal61_TDDhostel_management)
