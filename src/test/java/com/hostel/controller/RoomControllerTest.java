@@ -36,11 +36,13 @@ public class RoomControllerTest {
 
     @Before
     public void setUp() {
+        // Initialize mocks before each test
         closeable = MockitoAnnotations.openMocks(this);
     }
 
     @After
     public void tearDown() throws Exception {
+        // Close mocks after each test
         closeable.close();
     }
 

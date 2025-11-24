@@ -31,11 +31,14 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
      */
     @Override
     public void onSetUp() {
+        // Create UI on EDT
         GuiActionRunner.execute(() -> {
             roomSwingView = new RoomSwingView();
             return roomSwingView;
 
         });
+        // Prepare AssertJ window fixture
+
         window = new FrameFixture(robot(), roomSwingView);
         window.show(); // show the frame to test
 

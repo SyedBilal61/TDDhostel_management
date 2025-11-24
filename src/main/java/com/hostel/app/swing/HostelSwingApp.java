@@ -16,6 +16,8 @@ import picocli.CommandLine.Option;
 
 @Command(mixinStandardHelpOptions = true)
 public class HostelSwingApp implements Callable<Void> {
+    
+    // --- Command-line options for MongoDB configuration ---
 
     @Option(names = { "--mongo-host" }, description = "MongoDB host address")
     private String mongoHost = "localhost";
@@ -29,6 +31,9 @@ public class HostelSwingApp implements Callable<Void> {
     @Option(names = { "--db-collection" }, description = "Collection name")
     private String collectionName = "rooms";
 
+    //Entry Point of the Application
+    
+    
     public static void main(String[] args) {
         CommandLine.call(new HostelSwingApp(), args);
     }
@@ -52,6 +57,7 @@ public class HostelSwingApp implements Callable<Void> {
                 controller.allRooms();
 
             } catch (Exception e) {
+                /* Print stack trace for any initialization errors */
                 e.printStackTrace();
             }
         });

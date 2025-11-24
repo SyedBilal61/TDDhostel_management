@@ -16,10 +16,13 @@ import com.mongodb.client.model.ReplaceOptions;
 
 import hostel_management.Room;
 
+/* MongoDB implementation of RoomRepository */
 public class RoomMongoRepository implements RoomRepository {
 
+    /* MongoDB collection for rooms */
     private final MongoCollection<Document> roomCollection;
 
+    /* Constructor: get the collection from MongoDB database */
     public RoomMongoRepository(MongoClient client, String databaseName, String collectionName) {
         MongoDatabase database = client.getDatabase(databaseName);
         this.roomCollection = database.getCollection(collectionName);
@@ -48,7 +51,7 @@ public class RoomMongoRepository implements RoomRepository {
         roomCollection.replaceOne(eq("roomNumber", room.getRoomNumber()), doc, new ReplaceOptions().upsert(true));
     }
 
-    //
+    /* Convert MongoDB document to Room object */
 
     private Room fromDocumentToRoom(Document doc) {
 
