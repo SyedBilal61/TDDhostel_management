@@ -20,9 +20,10 @@
     <cucumber.version>5.5.0</cucumber.version>
 <sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 
-
-
    	</properties>
+<<!-- this comment is just to check the workflow of the sonarcloud -->
+
+
 
 <dependencies>
     <dependency>
