@@ -18,33 +18,7 @@
 			2.23.1</log4j.version>
     <testcontainers.version>1.15.1</testcontainers.version>
     <cucumber.version>5.5.0</cucumber.version>
-    
-    
-    <!-- SonarCloud exclusions -->
-    <sonar.exclusions>
-        hostel_management/Main.java,
-        com/hostel/view/swing/**,
-        com/hostel/controller/**,
-        **/*IT.java,
-        **/*Integration*.java,
-        **/*Mongo*.java
-    </sonar.exclusions>
-
-    <sonar.coverage.exclusions>
-			hostel_management/Main.java,
-			com/hostel/view/swing/**,
-			com/hostel/controller/**,
-			**/*IT.java,
-			**/*Integration*.java,
-			**/*Mongo*.java
-		</sonar.coverage.exclusions>
-    
-    
-    
-    
-    
-    
-	</properties>
+   	</properties>
 
 <dependencies>
     <dependency>
