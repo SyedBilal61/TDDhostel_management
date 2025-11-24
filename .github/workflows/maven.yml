@@ -34,7 +34,9 @@ jobs:
       - name: Cache Maven packages
         uses: actions/cache@v4
         with:
-          path: ~/.m2
+          path: | 
+            ~/.m2
+            ~/.sonar/cache
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml','**/*.yml')}}  
           restore-keys: ${{ runner.os }}-m2
      
@@ -42,10 +44,14 @@ jobs:
       #Step:Build and test your project with maven 
       
       - name: Build with Maven
-        run: 
-          xvfb-run -a mvn -f pom.xml clean verify -Pjacoco -DrepoToken=$COVERALLS_REPO_TOKEN coveralls:report
+        run: xvfb-run -a mvn -f pom.xml clean verify -Pjacoco -DrepoToken=$COVERALLS_REPO_TOKEN coveralls:report sonar:sonar \
+         -Dsonar.organization=SyedBilal61 \
+         -Dsonar.host.url=https://sonarcloud.io
+          
         env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           COVERALLS_REPO_TOKEN: ${{secrets.COVERALLS_TOKEN}}
+          SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
         
       #Step:Archive Junit Report
       - name: Archive Junit Report
