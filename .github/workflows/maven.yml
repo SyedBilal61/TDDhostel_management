@@ -44,7 +44,7 @@ jobs:
       #Step:Build and test your project with maven 
       
       - name: Build with Maven
-        run: xvfb-run -a mvn -f pom.xml clean verify coveralls:report sonar:sonar -Pjacoco -DrepoToken=$COVERALLS_REPO_TOKEN -Dsonar.organization=syedbilal61 -Dsonar.projectkey=SyedBilal61_TDDhostel_management -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
+        run: xvfb-run -a mvn -f pom.xml clean verify coveralls:report sonar:sonar -Pjacoco -DrepoToken=$COVERALLS_REPO_TOKEN -Dsonar.organization=syedbilal61 -Dsonar.projectKey=SyedBilal61_TDDhostel_management -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
           
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
