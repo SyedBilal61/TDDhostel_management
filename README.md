@@ -1,3 +1,4 @@
+
 # TDD Hostel Management Project
 
 [![MY TDD PROJECT](https://github.com/SyedBilal61/TDDhostel_management/actions/workflows/maven.yml/badge.svg)](https://github.com/SyedBilal61/TDDhostel_management/actions/workflows/maven.yml)
@@ -8,3 +9,4 @@
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=SyedBilal61_TDDhostel_management&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=SyedBilal61_TDDhostel_management)
 
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=SyedBilal61_TDDhostel_management&metric=coverage)](https://sonarcloud.io/summary/new_code?id=SyedBilal61_TDDhostel_management)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=SyedBilal61_TDDhostel_management&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=SyedBilal61_TDDhostel_management)
