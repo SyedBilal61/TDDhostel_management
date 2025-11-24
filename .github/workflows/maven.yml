@@ -48,7 +48,7 @@ jobs:
          -Pjacoco \
          -DrepoToken=$COVERALLS_REPO_TOKEN \
          -Dsonar.organization=syedbilal61 \
-         -Dsonar.host.url=https://sonarcloud.io
+         -Dsonar.host.url=https://sonarcloud.io \
          -Dsonar.login=$SONAR_TOKEN
           
         env:
