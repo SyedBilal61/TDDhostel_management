@@ -20,6 +20,8 @@ jobs:
    
     #Step Get your project code 
       - uses: actions/checkout@v2
+        with: 
+          fetch-depth: 0
       
     
      #Step:Istall JDK based on matrix  (so maven can use it )
