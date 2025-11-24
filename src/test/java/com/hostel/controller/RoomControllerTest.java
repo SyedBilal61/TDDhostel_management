@@ -111,9 +111,10 @@ public class RoomControllerTest {
 
         verify(roomView).showError("Room not found", null);
     }
-    
-    // Test created to Improve the Code Coverage of the If-else section of AutoCreateRooms
-    
+
+    // Test created to Improve the Code Coverage of the If-else section of
+    // AutoCreateRooms
+
     @Test
     public void testAssignAutoCreateRoom() {
     	 //// Make repository return null so room is "not found"
@@ -130,5 +131,5 @@ public class RoomControllerTest {
     	
     	
     	
-    }    
+    }
 }

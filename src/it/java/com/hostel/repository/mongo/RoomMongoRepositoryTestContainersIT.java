@@ -21,9 +21,8 @@ import hostel_management.Room;
 
 public class RoomMongoRepositoryTestContainersIT {
 
-	// Start a temporary MongoDB container for this test
-    
-	
+    // Start a temporary MongoDB container for this test
+
     @ClassRule
     public static final MongoDBContainer mongo = new MongoDBContainer("mongo:4.4.3");
 
@@ -31,168 +30,125 @@ public class RoomMongoRepositoryTestContainersIT {
     private RoomMongoRepository roomRepository;
     private MongoCollection<Document> roomCollection;
     private MongoDatabase database;
-   
-    
+
     @Before
-    
+
     public void setup() {
         // Connect to the MongoDB container
-        client = new MongoClient(
-                new ServerAddress(
-                        mongo.getContainerIpAddress(),
-                        mongo.getFirstMappedPort()
-        )
-        );
-        
-       //first created for IT and now update constructer with DB and collection for E2E
+        client = new MongoClient(new ServerAddress(mongo.getContainerIpAddress(), mongo.getFirstMappedPort()));
+
+        // first created for IT and now update constructer with DB and collection for
+        // E2E
         String testDb = "test-db";
         String testCollection = "test-rooms";
         roomRepository = new RoomMongoRepository(client, testDb, testCollection);
-        
-        //clean database for eachtest
+
+        // clean database for eachtest
         database = client.getDatabase(testDb);
         database.drop();
         roomCollection = database.getCollection(testCollection);
-        
+
     }
-        
-           
-        
-        
+
     @After
-    
+
     public void tearDown() {
         // Close MongoDB connection after test
-            client.close();
+        client.close();
     }
-
 
     private void addTestRoomToDataBase(String roomNumber, String tenant) {
-    	
-    	roomCollection.insertOne(new Document()
-    			.append("roomNumber", roomNumber)
-    			.append("tenant", tenant));
-    
+
+        roomCollection.insertOne(new Document().append("roomNumber", roomNumber).append("tenant", tenant));
+
     }
-        
-        
-        
-        
+
     @Test
     public void simpleTestToCheckConnectivity() {
-    	assertNotNull(database);
-    	assertNotNull(roomCollection);
-    	
+        assertNotNull(database);
+        assertNotNull(roomCollection);
+
     }
-    
-    
-    
-    
-    
-    @Test 
+
+    @Test
     public void testFindAll() {
-    	addTestRoomToDataBase("A1", "Zain");
-    	addTestRoomToDataBase("A2", "Ali");
-    	
-    	List <Room> rooms = roomRepository.findAll();
-    	assertThat(rooms).hasSize(2);
-    	
-    	Room r1 = rooms.get(0);
-    	assertThat(r1.getRoomNumber()).isEqualTo("A1");
-    	assertThat(r1.getTenant()).isEqualTo("Zain");
-    	
-    	Room r2 = rooms.get(1);
-    	assertThat(r2.getRoomNumber()).isEqualTo("A2");
-    	assertThat(r2.getTenant()).isEqualTo("Ali");
-    	}
-    
-    
-    
-    @Test 
+        addTestRoomToDataBase("A1", "Zain");
+        addTestRoomToDataBase("A2", "Ali");
+
+        List<Room> rooms = roomRepository.findAll();
+        assertThat(rooms).hasSize(2);
+
+        Room r1 = rooms.get(0);
+        assertThat(r1.getRoomNumber()).isEqualTo("A1");
+        assertThat(r1.getTenant()).isEqualTo("Zain");
+
+        Room r2 = rooms.get(1);
+        assertThat(r2.getRoomNumber()).isEqualTo("A2");
+        assertThat(r2.getTenant()).isEqualTo("Ali");
+    }
+
+    @Test
     public void testFindByRoomNumber() {
-        
-    	addTestRoomToDataBase("A1", "Zain");
+
+        addTestRoomToDataBase("A1", "Zain");
         Room result = roomRepository.findByRoomNumber("A1");
-    	
-    	
-    	assertThat(result.getRoomNumber()).isEqualTo("A1");
-    	assertThat(result.getTenant()).isEqualTo("Zain");
-    	
-        }
-    
-    
-    
-    
-    @Test 
+
+        assertThat(result.getRoomNumber()).isEqualTo("A1");
+        assertThat(result.getTenant()).isEqualTo("Zain");
+
+    }
+
+    @Test
     public void testSave() {
-    	
-    	Room r1 = new Room("A1");
-    	r1.assignTenant("Zain");
-    	
-    	roomRepository.save(r1);
-    	
-    	Room saved = roomRepository.findByRoomNumber("A1");    	
-    	
-    	
-    	assertThat(saved.getRoomNumber()).isEqualTo("A1");
-    	assertThat(saved.getTenant()).isEqualTo("Zain");
+
+        Room r1 = new Room("A1");
+        r1.assignTenant("Zain");
+
+        roomRepository.save(r1);
+
+        Room saved = roomRepository.findByRoomNumber("A1");
+
+        assertThat(saved.getRoomNumber()).isEqualTo("A1");
+        assertThat(saved.getTenant()).isEqualTo("Zain");
     }
-    
-    
-    
-    
-    @Test 
-    public void testvacate () {
-    	addTestRoomToDataBase("A1", "Zain");
-    	roomRepository.vacate("A1");
-    	
-    	
-       Room r = roomRepository.findByRoomNumber("A1");
-       assertThat(r).isNotNull();       //the room still exists
-       assertThat(r.getTenant()).isNull();   //tenant should be null
-       assertThat(r.isAvailable()).isTrue();  // room should be availble 
-    		  		   
+
+    @Test
+    public void testvacate() {
+        addTestRoomToDataBase("A1", "Zain");
+        roomRepository.vacate("A1");
+
+        Room r = roomRepository.findByRoomNumber("A1");
+        assertThat(r).isNotNull(); // the room still exists
+        assertThat(r.getTenant()).isNull(); // tenant should be null
+        assertThat(r.isAvailable()).isTrue(); // room should be availble
+
     }
-    
-    //The Following Tests are introduced to Improve the code Coverage
-    
+
+    // The Following Tests are introduced to Improve the code Coverage
+
     @Test
     public void testFindByRoomNumberNotFound() {
         Room result = roomRepository.findByRoomNumber("NON_EXISTENT");
-        assertThat(result).isNull();  
+        assertThat(result).isNull();
     }
-    
-   
-    
+
     @Test
     public void testFromDocumentToRoomVacateBranches() {
         // Empty tenant
         addTestRoomToDataBase("B1", "");
         Room r1 = roomRepository.findByRoomNumber("B1");
-        assertThat(r1.getTenant()).isNull();  
+        assertThat(r1.getTenant()).isNull();
 
         // Null tenant
         addTestRoomToDataBase("B2", null);
         Room r2 = roomRepository.findByRoomNumber("B2");
-        assertThat(r2.getTenant()).isNull();  
+        assertThat(r2.getTenant()).isNull();
     }
 
-   
-    
     @Test
     public void testVacateNonExistentRoom() {
         // Should do nothing, just safe execution
-        roomRepository.vacate("NON_EXISTENT");  
+        roomRepository.vacate("NON_EXISTENT");
     }
 
-    
-
-    
-  
-    
-    
-    
-    
-    }
-
-    
+}

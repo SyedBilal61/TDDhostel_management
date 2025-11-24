@@ -14,43 +14,38 @@ import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
-
-
-
-
 @Command(mixinStandardHelpOptions = true)
 public class HostelSwingApp implements Callable<Void> {
 
-    @Option(names = {"--mongo-host"}, description = "MongoDB host address")
+    @Option(names = { "--mongo-host" }, description = "MongoDB host address")
     private String mongoHost = "localhost";
 
-    @Option(names = {"--mongo-port"}, description = "MongoDB host port")
+    @Option(names = { "--mongo-port" }, description = "MongoDB host port")
     private int mongoPort = 27017;
 
-    @Option(names = {"--db-name"}, description = "Database name")
+    @Option(names = { "--db-name" }, description = "Database name")
     private String databaseName = "hostel";
 
-    @Option(names = {"--db-collection"}, description = "Collection name")
+    @Option(names = { "--db-collection" }, description = "Collection name")
     private String collectionName = "rooms";
 
     public static void main(String[] args) {
-    	CommandLine.call(new HostelSwingApp(), args);
+        CommandLine.call(new HostelSwingApp(), args);
     }
 
     @Override
     public Void call() throws Exception {
         EventQueue.invokeLater(() -> {
             try {
-                MongoClient client =
-                        new MongoClient(new ServerAddress(mongoHost, mongoPort));
+                MongoClient client = new MongoClient(new ServerAddress(mongoHost, mongoPort));
 
-                RoomMongoRepository repository =
-                        new RoomMongoRepository(client, databaseName, collectionName);
+                RoomMongoRepository repository = new RoomMongoRepository(client, databaseName, collectionName);
 
                 RoomSwingView view = new RoomSwingView();
-                RoomController controller =  new RoomController(view, repository);
-                controller.setAutoCreateRooms(true);   //for UI frame,rooms automatically when assigning a tenant
-                                                      // without pre-existing room in the database. Needed for GUI/E2E to work.
+                RoomController controller = new RoomController(view, repository);
+                controller.setAutoCreateRooms(true); // for UI frame,rooms automatically when assigning a tenant
+                                                     // without pre-existing room in the database. Needed for GUI/E2E to
+                                                     // work.
 
                 view.setRoomController(controller);
                 view.setVisible(true);

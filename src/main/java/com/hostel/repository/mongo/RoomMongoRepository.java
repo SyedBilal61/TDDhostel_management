@@ -16,10 +16,8 @@ import com.mongodb.client.model.ReplaceOptions;
 
 import hostel_management.Room;
 
-public class RoomMongoRepository  implements RoomRepository
-{
+public class RoomMongoRepository implements RoomRepository {
 
-   
     private final MongoCollection<Document> roomCollection;
 
     public RoomMongoRepository(MongoClient client, String databaseName, String collectionName) {
@@ -27,17 +25,12 @@ public class RoomMongoRepository  implements RoomRepository
         this.roomCollection = database.getCollection(collectionName);
     }
 
-    
     @Override
     public List<Room> findAll() {
-        return StreamSupport.stream(roomCollection.find().spliterator(), false)
-                .map(this::fromDocumentToRoom)
+        return StreamSupport.stream(roomCollection.find().spliterator(), false).map(this::fromDocumentToRoom)
                 .collect(Collectors.toList());
     }
 
-    
-    
-    
     @Override
     public Room findByRoomNumber(String roomNumber) {
         Document doc = roomCollection.find(eq("roomNumber", roomNumber)).first();
@@ -47,57 +40,42 @@ public class RoomMongoRepository  implements RoomRepository
         return null;
     }
 
-    
-    
     @Override
     public void save(Room room) {
-        Document doc = new Document()
-                .append("roomNumber", room.getRoomNumber())
-                .append("tenant", room.getTenant());
-        
-     // Use upsert: insert new or replace existing
+        Document doc = new Document().append("roomNumber", room.getRoomNumber()).append("tenant", room.getTenant());
+
+        // Use upsert: insert new or replace existing
         roomCollection.replaceOne(eq("roomNumber", room.getRoomNumber()), doc, new ReplaceOptions().upsert(true));
     }
 
-    
-    
-
-    // 
+    //
 
     private Room fromDocumentToRoom(Document doc) {
-        
-    	Room room = new Room(doc.getString("roomNumber"));
+
+        Room room = new Room(doc.getString("roomNumber"));
         String tenant = doc.getString("tenant");
-        
-        
+
         if (tenant != null) {
-        	if(!tenant.isEmpty()) {
-        		room.assignTenant(tenant);
-        	} else {
-        		room.vacate();
-        	}
-        
-        
-        
-        }else 
-        room.vacate();
-        
+            if (!tenant.isEmpty()) {
+                room.assignTenant(tenant);
+            } else {
+                room.vacate();
+            }
+
+        } else
+            room.vacate();
+
         return room;
     }
 
+    @Override
+    public void vacate(String roomNumber) {
 
+        Room room = findByRoomNumber(roomNumber);
+        if (room != null) {
+            room.vacate();
+            save(room);
+        }
 
-	@Override
-	public void vacate(String roomNumber) {
-		
-		Room room = findByRoomNumber(roomNumber);
-		if (room != null) {
-			room.vacate();
-			save(room);
-		}
-		
-		
-		
-		
-	}
+    }
 }

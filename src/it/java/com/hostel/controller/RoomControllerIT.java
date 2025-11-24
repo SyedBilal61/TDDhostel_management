@@ -7,12 +7,11 @@ import com.hostel.view.RoomView;
 
 public class RoomControllerIT {
 
-	@Mock
-	private RoomView roomView;
-	
-	private RoomRepository roomRepository;
-	
-	private RoomController roomController;
-	
-	
+    @Mock
+    private RoomView roomView;
+
+    private RoomRepository roomRepository;
+
+    private RoomController roomController;
+
 }

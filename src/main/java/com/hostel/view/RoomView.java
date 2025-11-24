@@ -10,11 +10,9 @@ public interface RoomView {
     // Show details of a single room
     void showRoom(Room room);
 
-     // Show details of a All room
+    // Show details of a All room
     void showAllRooms(List<Room> rooms);
-    
-    
-    
+
     // Show error message for a room operation
     void showError(String message, Room room);
 
@@ -24,5 +22,3 @@ public interface RoomView {
     // Notify that the room was vacated successfully
     void roomVacated(Room room);
 }
-
-

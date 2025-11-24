@@ -26,61 +26,44 @@ import com.mongodb.client.model.Filters;
 @RunWith(GUITestRunner.class)
 public class HotelSwingAppE2E extends AssertJSwingJUnitTestCase {
 
-	@ClassRule
-	public static final MongoDBContainer mongo = new MongoDBContainer("mongo:4.4.3");
-	
-	
-	private static final String DB_NAME = "test-db";
-	
-	private static final String  COLLECTION_NAME = "test-collection";
-	
-	private MongoClient mongoClient;
-	
-	private FrameFixture window;
-	
-	
-	
-	private static final String ROOM_FIXTURE_1_NUMBER = "A1";
-	private static final String ROOM_FIXTURE_1_TENANT = "Ali";
+    @ClassRule
+    public static final MongoDBContainer mongo = new MongoDBContainer("mongo:4.4.3");
 
-	private static final String ROOM_FIXTURE_2_NUMBER = "A2";
-	private static final String ROOM_FIXTURE_2_TENANT = "Zain";
+    private static final String DB_NAME = "test-db";
 
-	
-	
-	
-	
-	
-	@Override 
-	protected void onSetUp() {
-		String containerIpAddress = mongo.getContainerIpAddress();
-		Integer mappedPort = mongo.getFirstMappedPort();
-		
-		mongoClient = new MongoClient(containerIpAddress, mappedPort);
-		
-		
-		//always start with an empty database 
-		mongoClient.getDatabase(DB_NAME).drop();
-		
-		
-		//add some test rooms to the Database
-		addTestRoomToDatabase(ROOM_FIXTURE_1_NUMBER, ROOM_FIXTURE_1_TENANT);
-		addTestRoomToDatabase(ROOM_FIXTURE_2_NUMBER, ROOM_FIXTURE_2_TENANT);
+    private static final String COLLECTION_NAME = "test-collection";
 
-		
-		
-		//Start the Swing Application
-		
-		application("com.hostel.app.swing.HostelSwingApp")
-		    .withArgs(
-		    	 "--mongo-host=" + containerIpAddress,
-		         "--mongo-port=" + mappedPort.toString(),
-		         "--db-name=" + DB_NAME,
-		         "--db-collection=" + COLLECTION_NAME
-	   )
-		 .start();
+    private MongoClient mongoClient;
 
-		// get a reference to its JFrame
+    private FrameFixture window;
+
+    private static final String ROOM_FIXTURE_1_NUMBER = "A1";
+    private static final String ROOM_FIXTURE_1_TENANT = "Ali";
+
+    private static final String ROOM_FIXTURE_2_NUMBER = "A2";
+    private static final String ROOM_FIXTURE_2_TENANT = "Zain";
+
+    @Override
+    protected void onSetUp() {
+        String containerIpAddress = mongo.getContainerIpAddress();
+        Integer mappedPort = mongo.getFirstMappedPort();
+
+        mongoClient = new MongoClient(containerIpAddress, mappedPort);
+
+        // always start with an empty database
+        mongoClient.getDatabase(DB_NAME).drop();
+
+        // add some test rooms to the Database
+        addTestRoomToDatabase(ROOM_FIXTURE_1_NUMBER, ROOM_FIXTURE_1_TENANT);
+        addTestRoomToDatabase(ROOM_FIXTURE_2_NUMBER, ROOM_FIXTURE_2_TENANT);
+
+        // Start the Swing Application
+
+        application("com.hostel.app.swing.HostelSwingApp").withArgs("--mongo-host=" + containerIpAddress,
+                "--mongo-port=" + mappedPort.toString(), "--db-name=" + DB_NAME, "--db-collection=" + COLLECTION_NAME)
+                .start();
+
+        // get a reference to its JFrame
         window = org.assertj.swing.finder.WindowFinder.findFrame(new GenericTypeMatcher<JFrame>(JFrame.class) {
             @Override
             protected boolean isMatching(JFrame frame) {
@@ -95,41 +78,23 @@ public class HotelSwingAppE2E extends AssertJSwingJUnitTestCase {
     }
 
     private void addTestRoomToDatabase(String roomNumber, String tenant) {
-        mongoClient
-            .getDatabase(DB_NAME)
-            .getCollection(COLLECTION_NAME)
-            .insertOne(new Document()
-            		.append("roomNumber", roomNumber)
-            		.append("tenant", tenant));
+        mongoClient.getDatabase(DB_NAME).getCollection(COLLECTION_NAME)
+                .insertOne(new Document().append("roomNumber", roomNumber).append("tenant", tenant));
     }
-    
 
-    
+    // Verfies when your app starts the rooms from Databacse are correctly shown in
+    // GUI
 
-    
-    
-    
-    
-    
-    //Verfies when your app starts the rooms from Databacse are correctly shown in GUI
-    
     @Test
     @GUITest
     public void testOnStartAllDatabaseElementsAreShown() {
         assertThat(window.list().contents())
-            .anySatisfy(e -> assertThat(e)
-                .contains(ROOM_FIXTURE_1_NUMBER, ROOM_FIXTURE_1_TENANT))
-            .anySatisfy(e -> assertThat(e)
-                .contains(ROOM_FIXTURE_2_NUMBER, ROOM_FIXTURE_2_TENANT));
+                .anySatisfy(e -> assertThat(e).contains(ROOM_FIXTURE_1_NUMBER, ROOM_FIXTURE_1_TENANT))
+                .anySatisfy(e -> assertThat(e).contains(ROOM_FIXTURE_2_NUMBER, ROOM_FIXTURE_2_TENANT));
     }
 
-    
-    //Test adding new room successfully added 
- 
-    
-    
-    
-    
+    // Test adding new room successfully added
+
     @Test
     @GUITest
     public void testAddNewRoomSuccess() {
@@ -145,123 +110,68 @@ public class HotelSwingAppE2E extends AssertJSwingJUnitTestCase {
         window.button(JButtonMatcher.withText("Add")).click();
 
         // Step 4: Verify the tenant appears in the list
-        assertThat(window.list().contents())
-            .anySatisfy(e -> assertThat(e).contains("C1", "Alice"));
+        assertThat(window.list().contents()).anySatisfy(e -> assertThat(e).contains("C1", "Alice"));
     }
 
-    
-    
-    
-    
-    
-    
-    
-    //Test for the button of Add not functioning  
-    
+    // Test for the button of Add not functioning
+
     @Test
     @GUITest
-    public void testErrorShowingOnAddButton () {
-    	
-    	//enter a duplicate room info
-    	window.textBox("roomIdTextBox").enterText(ROOM_FIXTURE_1_NUMBER);
-    	window.textBox("nameTextBox").enterText("marco");
-    	
-    	
-    	
-    	//click add button
-    	window.button(JButtonMatcher.withText("Add")).click();
-    	
-    	
-    	
-    	//verify the Error Message Shown
-    	assertThat(window.label("errorMessageLabel").text())
-    	     .contains(ROOM_FIXTURE_1_NUMBER, ROOM_FIXTURE_1_TENANT);
+    public void testErrorShowingOnAddButton() {
+
+        // enter a duplicate room info
+        window.textBox("roomIdTextBox").enterText(ROOM_FIXTURE_1_NUMBER);
+        window.textBox("nameTextBox").enterText("marco");
+
+        // click add button
+        window.button(JButtonMatcher.withText("Add")).click();
+
+        // verify the Error Message Shown
+        assertThat(window.label("errorMessageLabel").text()).contains(ROOM_FIXTURE_1_NUMBER, ROOM_FIXTURE_1_TENANT);
     }
-    
-    
-    
-    
-   //on Delete Button 
-    
-    
+
+    // on Delete Button
+
     @GUITest
     @Test
-    
+
     public void testFunctionalityOfDeleteButton() {
-    	
-    	//select the room from list by matching tenant Name
-    	
-    	window.list("roomList")
-    	      .selectItem(Pattern.compile(".*" + ROOM_FIXTURE_1_NUMBER + ".*"));
-    	//press delete button
-    	window.button(JButtonMatcher.withText("Delete Selected")).click();
-    	
-    	
-    	//verify 
-    	
-    	assertThat(window.list().contents())
-    			.noneMatch(e -> e.contains(ROOM_FIXTURE_1_NUMBER));
-    
+
+        // select the room from list by matching tenant Name
+
+        window.list("roomList").selectItem(Pattern.compile(".*" + ROOM_FIXTURE_1_NUMBER + ".*"));
+        // press delete button
+        window.button(JButtonMatcher.withText("Delete Selected")).click();
+
+        // verify
+
+        assertThat(window.list().contents()).noneMatch(e -> e.contains(ROOM_FIXTURE_1_NUMBER));
+
     }
-    
-    
-    
+
     @GUITest
     @Test
-    
+
     public void testDeleteRoomErrorShowMessage() {
-    	
-    	//Select room in list
-    	window.list("roomList")
-    	  .selectItem(Pattern.compile(".*" + ROOM_FIXTURE_1_NUMBER + ".*"));
-    	
-    	  
-    	  
-    	 //Maunually remove the room from the database
-    	  
-    	removeTestRoomFromDatabase(ROOM_FIXTURE_1_NUMBER);
-    	
-    	
-    	//press delete button 
-    	
-    	window.button(JButtonMatcher.withText("Delete Selected")).click();
-    	
-    	
-    	
-    	//verify that error message is shown
-    	assertThat(window.label("errorMessageLabel").text())
-    	    .contains("Room not found: null");
-    	       	  
-    	  
+
+        // Select room in list
+        window.list("roomList").selectItem(Pattern.compile(".*" + ROOM_FIXTURE_1_NUMBER + ".*"));
+
+        // Maunually remove the room from the database
+
+        removeTestRoomFromDatabase(ROOM_FIXTURE_1_NUMBER);
+
+        // press delete button
+
+        window.button(JButtonMatcher.withText("Delete Selected")).click();
+
+        // verify that error message is shown
+        assertThat(window.label("errorMessageLabel").text()).contains("Room not found: null");
+
     }
-    
+
     private void removeTestRoomFromDatabase(String roomNumber) {
-    	mongoClient
-    	  .getDatabase(DB_NAME)
-    	  .getCollection(COLLECTION_NAME)
-    	  .deleteOne(Filters.eq("roomNumber", roomNumber));
+        mongoClient.getDatabase(DB_NAME).getCollection(COLLECTION_NAME).deleteOne(Filters.eq("roomNumber", roomNumber));
     }
-    
-    	
-    	
-    	
-    	
-    
-    
-    	
-    	
-    	
-    	
-    }    		
-		    		
-		    		
-		    		
-		    		
-		    		
-		
-		
-		
-		
-		
-		
-	
+
+}

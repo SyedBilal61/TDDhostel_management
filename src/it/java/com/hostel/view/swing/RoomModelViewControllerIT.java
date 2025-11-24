@@ -23,112 +23,99 @@ import hostel_management.Room;
 @RunWith(GUITestRunner.class)
 public class RoomModelViewControllerIT extends AssertJSwingJUnitTestCase {
 
-	
-	
-	// Start a MongoDb Container for testing in testcontainers
-	@ClassRule
+    // Start a MongoDb Container for testing in testcontainers
+    @ClassRule
 
-	public static final MongoDBContainer mongo = new MongoDBContainer("mongo:4.4.3");
+    public static final MongoDBContainer mongo = new MongoDBContainer("mongo:4.4.3");
 
-	private MongoClient mongoClient;
-	private RoomMongoRepository roomRepository;
+    private MongoClient mongoClient;
+    private RoomMongoRepository roomRepository;
 
-	private RoomController roomController;
-	private FrameFixture window;
+    private RoomController roomController;
+    private FrameFixture window;
 
-	
-	
-	
-	@Override
-	protected void onSetUp() {
+    @Override
+    protected void onSetUp() {
 
-		// Connect to MongoDBContainer
-		mongoClient = new MongoClient(new ServerAddress(mongo.getHost(), mongo.getFirstMappedPort()));
+        // Connect to MongoDBContainer
+        mongoClient = new MongoClient(new ServerAddress(mongo.getHost(), mongo.getFirstMappedPort()));
 
-		 //first created for IT and now update constructer with DB and collection for E2E
-		String testDb = "it-db";
-		String testCollection= "it-rooms";
-		
-		roomRepository = new RoomMongoRepository(mongoClient, testDb, testCollection);
-		
-		
-		// clean dataBase for each test
+        // first created for IT and now update constructer with DB and collection for
+        // E2E
+        String testDb = "it-db";
+        String testCollection = "it-rooms";
 
-		for (Room r : roomRepository.findAll()) {
-			roomRepository.vacate(r.getRoomNumber());
-		}
+        roomRepository = new RoomMongoRepository(mongoClient, testDb, testCollection);
 
-		// Create a Swing UI
+        // clean dataBase for each test
 
-		window = new FrameFixture(robot(), GuiActionRunner.execute(() -> {
-			RoomSwingView view = new RoomSwingView();
-			roomController = new RoomController(view, roomRepository);
-			view.setRoomController(roomController);
-			return view;
+        for (Room r : roomRepository.findAll()) {
+            roomRepository.vacate(r.getRoomNumber());
+        }
 
-		})
+        // Create a Swing UI
 
-		);
+        window = new FrameFixture(robot(), GuiActionRunner.execute(() -> {
+            RoomSwingView view = new RoomSwingView();
+            roomController = new RoomController(view, roomRepository);
+            view.setRoomController(roomController);
+            return view;
 
-		window.show();
-	}
+        })
 
-	// close the database after using
+        );
 
-	@Override
-	protected void onTearDown() {
-		mongoClient.close();
-	}
-	
-	
-	
-	
-	@Test
-	@GUITest
-	public void testShowErrorShouldDisplayErrorMessageOnUI() {
-	   
-		// Use the window's target to get the JFrame (the RoomSwingView)
-	    GuiActionRunner.execute(() -> {
-	        ((RoomSwingView) window.target()).showError("Something went wrong", null);
-	    });
+        window.show();
+    }
 
-	    // Check that the label updated
-	    window.label("errorMessageLabel").requireText("Something went wrong: null");
-	    
-	    
-	}
+    // close the database after using
 
+    @Override
+    protected void onTearDown() {
+        mongoClient.close();
+    }
 
-	
-	
-	
-	@GUITest
-	@Test
-	public void testVacateRoom() {
+    @Test
+    @GUITest
+    public void testShowErrorShouldDisplayErrorMessageOnUI() {
 
-		// add a room for test
-		Room existing = new Room("A2");
-		existing.assignTenant("ali");
+        // Use the window's target to get the JFrame (the RoomSwingView)
+        GuiActionRunner.execute(() -> {
+            ((RoomSwingView) window.target()).showError("Something went wrong", null);
+        });
 
-		roomRepository.save(existing);
+        // Check that the label updated
+        window.label("errorMessageLabel").requireText("Something went wrong: null");
 
-		GuiActionRunner.execute(() -> roomController.allRooms());
+    }
 
-		// select the exist room
+    @GUITest
+    @Test
+    public void testVacateRoom() {
 
-		window.list("roomList").selectItem(0);
+        // add a room for test
+        Room existing = new Room("A2");
+        existing.assignTenant("ali");
 
-		// click the button
+        roomRepository.save(existing);
 
-		window.button(JButtonMatcher.withText("Delete Selected")).click();
+        GuiActionRunner.execute(() -> roomController.allRooms());
 
-		// verify that room has been updated in the database
+        // select the exist room
 
-		Room r = roomRepository.findByRoomNumber("A2");
-		assertThat(r).isNotNull();
-		assertThat(r.getTenant()).isNull();
-		assertThat(r.isAvailable()).isTrue();
+        window.list("roomList").selectItem(0);
 
-	}
+        // click the button
+
+        window.button(JButtonMatcher.withText("Delete Selected")).click();
+
+        // verify that room has been updated in the database
+
+        Room r = roomRepository.findByRoomNumber("A2");
+        assertThat(r).isNotNull();
+        assertThat(r.getTenant()).isNull();
+        assertThat(r.isAvailable()).isTrue();
+
+    }
 
 }
