@@ -18,10 +18,9 @@
 			2.23.1</log4j.version>
     <testcontainers.version>1.15.1</testcontainers.version>
     <cucumber.version>5.5.0</cucumber.version>
-<sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+  </properties>
 
-   	</properties>
-<!-- this comment is just to check the workflow of the sonarcloud -->
 
 
 
