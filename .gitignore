@@ -1,2 +1,14 @@
-# Maven build output
-/target/
+# Maven output
+target/
+
+# Eclipse output
+bin/
+
+# IDE config files
+*.iml
+.idea/
+.vscode/
+
+# Backup / temporary files
+*~
+*.log

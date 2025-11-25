@@ -2,7 +2,6 @@ package com.hostel.app.swing;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.swing.launcher.ApplicationLauncher.application;
-import static org.mockito.ArgumentMatchers.contains;
 
 import java.util.regex.Pattern;
 

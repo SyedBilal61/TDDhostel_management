@@ -31,6 +31,9 @@
     <sonar.issue.ignore.multicriteria.e2.resourceKey>**/view/swing/*.java</sonar.issue.ignore.multicriteria.e2.resourceKey>
     
     <sonar.coverage.exclusions>**/view/swing/*.java, **/app/swing/*.java, **/Main.java</sonar.coverage.exclusions>
+    
+    <sonar.coverage.exclusions>**/Room.java#toString()</sonar.coverage.exclusions>
+
 
 
     

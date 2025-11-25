@@ -27,15 +27,16 @@ public class Main {
             mongoHost = args[0];
 
         // Default port for MongoDB is 27017
-        MongoClient mongoClient = new MongoClient(mongoHost);
+        try (MongoClient mongoClient = new MongoClient(mongoHost)) {
         MongoDatabase db = mongoClient.getDatabase("mydb");
         MongoCollection<Document> collection = db.getCollection("examples");
 
         Document doc = new Document("name", "Greeting").append("type", "HelloWorld!");
         collection.insertOne(doc);
 
-        // Should print "HelloWorld!"
-        LOGGER.info(collection.find().first().get("type").toString());
-        mongoClient.close();
+        //to satisfy sonar 
+        String typeValue = collection.find().first().getString("type");
+        LOGGER.info(typeValue);
     }
+}
 }

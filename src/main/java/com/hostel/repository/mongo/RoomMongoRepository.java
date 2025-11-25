@@ -3,7 +3,6 @@ package com.hostel.repository.mongo;
 import static com.mongodb.client.model.Filters.eq;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.bson.Document;

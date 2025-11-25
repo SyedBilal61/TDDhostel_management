@@ -16,8 +16,6 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import com.hostel.controller.RoomController;
 import com.hostel.view.RoomView;
@@ -33,6 +31,8 @@ public class RoomSwingView extends JFrame implements RoomView {
     private JButton btnDeleteSelected;
     private JLabel lblError;
     private transient RoomController roomController; //put transient to remove code smell
+    private static final long serialVersionUID = 1L;  //used bcz java serialization an explcit ID 
+
 
     DefaultListModel<Room> getRoomListModel() {
         return roomListModel;
@@ -154,7 +154,7 @@ public class RoomSwingView extends JFrame implements RoomView {
 
         btnDeleteSelected = new JButton("Delete Selected");
         btnDeleteSelected.setName("deleteButton");
-        btnDeleteSelected.setEnabled(false); // ✅ initially disabled
+        btnDeleteSelected.setEnabled(false); // initially disabled
         btnDeleteSelected.addActionListener(e -> {
             if (roomController != null && roomList.getSelectedValue() != null) {
                 roomController.vacateRoom(roomList.getSelectedValue().getRoomNumber());
