@@ -1,180 +1,167 @@
+<!-- Root project definition with Maven schema -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>
-		4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
+  
+  <!-- Project metadata -->
   <groupId>com.hostel</groupId>
   <artifactId>hostel_management</artifactId>
-  <version>
-		0.0.1-SNAPSHOT</version>
+  <version>0.0.1-SNAPSHOT</version>
   <name>hostel_management</name>
+
+
+    <!-- Properties for version management, compiler, and sonar coverage -->
+
   <properties>
+  <!-- Encoding and Java version -->
+
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>
-			17</maven.compiler.source>
+    <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
+  
+  
+   <!-- Dependency versions -->
     <junit.version>4.13.2</junit.version>
-    <log4j.version>
-			2.23.1</log4j.version>
+    <log4j.version>2.23.1</log4j.version>
     <testcontainers.version>1.15.1</testcontainers.version>
     <cucumber.version>5.5.0</cucumber.version>
+  
+	<!-- For Satisfying SonarCloud-->  
     <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     
     <sonar.issue.ignore.multicriteria>e1,e2</sonar.issue.ignore.multicriteria>
 
-    <!-- Ignore naming convention for GUI code -->
+	<!-- Ignore naming convention for GUI code -->
     <sonar.issue.ignore.multicriteria.e1.ruleKey>java:S117</sonar.issue.ignore.multicriteria.e1.ruleKey>
     <sonar.issue.ignore.multicriteria.e1.resourceKey>**/view/swing/*.java</sonar.issue.ignore.multicriteria.e1.resourceKey>
 
-    <!-- Ignore deep inheritance for GUI code -->
+		<!-- Ignore deep inheritance for GUI code -->
     <sonar.issue.ignore.multicriteria.e2.ruleKey>java:S110</sonar.issue.ignore.multicriteria.e2.ruleKey>
+    
     <sonar.issue.ignore.multicriteria.e2.resourceKey>**/view/swing/*.java</sonar.issue.ignore.multicriteria.e2.resourceKey>
     
-    <sonar.coverage.exclusions>**/view/swing/*.java, **/app/swing/*.java, **/Main.java</sonar.coverage.exclusions>
+    <sonar.coverage.exclusions>**/view/swing/*.java,**/app/swing/*.java, **/Main.java</sonar.coverage.exclusions>
     
+	</properties>
 
-
-    
-  </properties>
-
-
-
+    <!-- Dependencies for testing, logging, database, GUI, BDD, and CLI -->
 
 <dependencies>
+        
+        <!-- JUnit for unit testing -->
     <dependency>
-        <groupId>
-				junit</groupId>
+        <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>${junit.version}</version>
         <scope>test</scope>
-		</dependency>
-		<!-- Log4j API -->
+	</dependency>
+		
+		<!-- Log4j API  and core for loging-->
     <dependency>
-        <groupId>
-				org.apache.logging.log4j</groupId>
+        <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-api</artifactId>
-        <version>
-				${log4j.version}</version>
+        <version>${log4j.version}</version>
 		</dependency>
+		
 		<!-- Log4j Core -->
     <dependency>
-        <groupId>
-				org.apache.logging.log4j</groupId>
+        <groupId>org.apache.logging.log4j</groupId>
         <artifactId>log4j-core</artifactId>
-        <version>
-				${log4j.version}</version>
-		</dependency>
+        <version>${log4j.version}</version>
+	</dependency>
  
-<dependency>
-    <groupId>org.mockito</groupId>
-    <artifactId>
-				mockito-core</artifactId>
-    <version>5.11.0</version>
-    <scope>test</scope>
-		</dependency>
-
+         <!-- Mockito for mocking in tests -->
+    <dependency>
+         <groupId>org.mockito</groupId>
+         <artifactId>mockito-core</artifactId>
+    	 <version>5.11.0</version>
+      	 <scope>test</scope>
+	</dependency>
 
 		<!-- Dependency to interact with mongoDB from Java-->
-
-<dependency>
-    <groupId>
-				org.mongodb</groupId>
-    <artifactId>mongo-java-driver</artifactId>
-    <version>3.12.7</version>
-		</dependency>
-
-
+	<dependency>
+    	<groupId>org.mongodb</groupId>
+    	<artifactId>mongo-java-driver</artifactId>
+    	<version>3.12.7</version>
+	</dependency>
+		
 		<!-- Required to see Logs of communication with the data base -->
-
-<dependency>
-  <groupId>
-				ch.qos.logback</groupId>
-  <artifactId>logback-classic</artifactId>
-  <version>1.2.3</version>
-		</dependency>
-
-
-
-
-<dependency>
-    <groupId>
-				de.bwaldvogel</groupId>
-    <artifactId>mongo-java-server</artifactId>
-    <version>1.11.1</version>
-    <scope>
-				test</scope>
-		</dependency>
-
+	<dependency>
+ 		 <groupId>ch.qos.logback</groupId>
+  		 <artifactId>logback-classic</artifactId>
+   		 <version>1.2.3</version>
+	</dependency>
+      
+       <!-- Embedded MongoDB for tests -->
+	<dependency>
+    	 <groupId>de.bwaldvogel</groupId>
+    	 <artifactId>mongo-java-server</artifactId>
+    	 <version>1.11.1</version>
+    	 <scope>test</scope>
+	</dependency>
 
 		<!-- tell maven to use containers-->
-<dependency>
-    <groupId>org.testcontainers</groupId>
-    <artifactId>
-				testcontainers</artifactId>
-    <version>${testcontainers.version}</version>
-    <scope>
-				test</scope>
-		</dependency>
+	<dependency>
+    	<groupId>org.testcontainers</groupId>
+    	<artifactId>testcontainers</artifactId>
+    	<version>${testcontainers.version}</version>
+    	<scope>test</scope>
+	</dependency>
 
 		<!-- automatically execute MongoDB instance inside a Docker container-->
-<dependency>
-    <groupId>org.testcontainers</groupId>
-    <artifactId>
-				mongodb</artifactId>
-    <version>${testcontainers.version}</version>
-    <scope>test</scope>
-		</dependency>
+	<dependency>
+    	<groupId>org.testcontainers</groupId>
+    	<artifactId>mongodb</artifactId>
+    	<version>${testcontainers.version}</version>
+    	<scope>test</scope>
+	</dependency>
 
 		<!--Includes assertj-core + Swing GUI testing tools. -->
-<dependency>
-    <groupId>
-				org.assertj</groupId>
-    <artifactId>assertj-swing-junit</artifactId>
-    <version>3.17.1</version>
-    <scope>
-				test</scope>
-		</dependency>
-
-
-<dependency>
-    <groupId>info.picocli</groupId>
-    <artifactId>picocli</artifactId>
-    <version>
-				4.6.1</version>
-		</dependency>
+	<dependency>
+    	<groupId>org.assertj</groupId>
+    	<artifactId>assertj-swing-junit</artifactId>
+    	<version>3.17.1</version>
+    	<scope>test</scope>
+	</dependency>
+	
+	       <!-- Picocli for CLI apps -->
+	<dependency>
+    	<groupId>info.picocli</groupId>
+    	<artifactId>picocli</artifactId>
+    	<version>4.6.1</version>
+    </dependency>
 
 		<!-- Cucumber JUnit integration -->
     <dependency>
-        <groupId>io.cucumber</groupId>
-        <artifactId>
-				cucumber-junit</artifactId>
-        <version>${cucumber.version}</version>
-        <scope>test</scope>
-		</dependency>
+    	 <groupId>io.cucumber</groupId>
+         <artifactId>cucumber-junit</artifactId>
+         <version>${cucumber.version}</version>
+         <scope>test</scope>
+	</dependency>
+	
 		<!-- Cucumber core for Java -->
     <dependency>
-        <groupId>
-				io.cucumber</groupId>
+        <groupId>io.cucumber</groupId>
         <artifactId>cucumber-java</artifactId>
-        <version>
-				${cucumber.version}</version>
-        <scope>test</scope> <!-- only used for testing -->
-		</dependency>
+        <version>${cucumber.version}</version>
+        <scope>test</scope>
+	</dependency>
 
+</dependencies>
+    
+    <!-- Build section with plugins -->
 
-	</dependencies>
 <build>
         <plugins>
             <plugin>
                 <groupId>
 					org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>
-					3.10.1</version>
+                <version>3.10.1</version>
                 <configuration>
                     <source>${maven.compiler.source}</source>
-                    <target>
-						${maven.compiler.target}</target>
+                    <target>${maven.compiler.target}</target>
 				</configuration>
 			</plugin>
 			<!-- for sourceJAR-->

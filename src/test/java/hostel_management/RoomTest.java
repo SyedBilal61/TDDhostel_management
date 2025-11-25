@@ -40,18 +40,18 @@ public class RoomTest {
 
     }
 
-    //This test is to just verify the toString() method 
     @Test
     public void testToString() {
-        Room emptyRoom = new Room("A1");
-        Room occupiedRoom = new Room("B1");
-        occupiedRoom.assignTenant("Zain");
-        
+        Room emptyRoom = new Room("A1");                 // tenant is null
         assertEquals("A1 (Empty)", emptyRoom.toString());
-        assertEquals("B1 Zain", occupiedRoom.toString());
+
+        Room emptyTenantRoom = new Room("B1");           // tenant is empty string
+        emptyTenantRoom.assignTenant("");
+        assertEquals("B1 (Empty)", emptyTenantRoom.toString());
+
+        Room occupiedRoom = new Room("C1");              // tenant is assigned
+        occupiedRoom.assignTenant("Zain");
+        assertEquals("C1 Zain", occupiedRoom.toString());
     }
 
-    
-    
-    
 }
