@@ -12,7 +12,7 @@
 #CODE SMELLS WITH SONARCLOUD
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=SyedBilal61_TDDhostel_management&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=SyedBilal61_TDDhostel_management)
 
-#COVERAGE REPORT WITH SONARCLOUD
+#COVERAGE REPORT WITH SONARCLOUD(The Badge color is #GREY by default)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=SyedBilal61_TDDhostel_management&metric=coverage)](https://sonarcloud.io/summary/new_code?id=SyedBilal61_TDDhostel_management)
 
 #TECHNICAL DEBT STATUS WITH SONARCLOUD

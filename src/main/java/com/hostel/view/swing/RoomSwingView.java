@@ -221,9 +221,8 @@ public class RoomSwingView extends JFrame implements RoomView {
 
     @Override
     public void roomVacated(Room room) {
-
+        room.assignTenant(null);
         // Remove the room from the list by room number
-
         for (int i = 0; i < roomListModel.size(); i++) {
             if (roomListModel.get(i).getRoomNumber().equals(room.getRoomNumber())) {
                 roomListModel.remove(i);

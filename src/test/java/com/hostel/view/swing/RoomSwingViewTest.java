@@ -160,7 +160,6 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
         // assert to satisfy sonar
         assertEquals("Error Occured: " + room1, window.label("errorMessageLabel").target().getText());
 
-
     }
 
     @Test

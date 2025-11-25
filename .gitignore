@@ -1,6 +1,10 @@
 # Maven output
 target/
 
+#compiled java class
+*.class
+
+
 # Eclipse output
 bin/
 
@@ -12,3 +16,5 @@ bin/
 # Backup / temporary files
 *~
 *.log
+#Failed GUI TEST FOLDER 
+**/failed-gui-tests/
