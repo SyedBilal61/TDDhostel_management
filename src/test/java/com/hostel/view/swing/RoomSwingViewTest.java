@@ -1,6 +1,7 @@
 package com.hostel.view.swing;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -157,7 +158,8 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
 
         window.label("errorMessageLabel").requireText("Error Occured: " + room1);
         // assert to satisfy sonar
-        assertTrue(window.label("errorMessageLabel").target().getText().equals("Error Occured: " + room1));
+        assertEquals("Error Occured: " + room1, window.label("errorMessageLabel").target().getText());
+
 
     }
 

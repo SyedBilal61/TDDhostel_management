@@ -1,5 +1,6 @@
 package hostel_management;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -39,4 +40,18 @@ public class RoomTest {
 
     }
 
+    //This test is to just verify the toString() method 
+    @Test
+    public void testToString() {
+        Room emptyRoom = new Room("A1");
+        Room occupiedRoom = new Room("B1");
+        occupiedRoom.assignTenant("Zain");
+        
+        assertEquals("A1 (Empty)", emptyRoom.toString());
+        assertEquals("B1 Zain", occupiedRoom.toString());
+    }
+
+    
+    
+    
 }
