@@ -19,6 +19,18 @@
     <testcontainers.version>1.15.1</testcontainers.version>
     <cucumber.version>5.5.0</cucumber.version>
     <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+    
+    <sonar.issue.ignore.multicriteria>e1,e2</sonar.issue.ignore.multicriteria>
+
+    <!-- Ignore naming convention for GUI code -->
+    <sonar.issue.ignore.multicriteria.e1.ruleKey>java:S117</sonar.issue.ignore.multicriteria.e1.ruleKey>
+    <sonar.issue.ignore.multicriteria.e1.resourceKey>**/view/swing/*.java</sonar.issue.ignore.multicriteria.e1.resourceKey>
+
+    <!-- Ignore deep inheritance for GUI code -->
+    <sonar.issue.ignore.multicriteria.e2.ruleKey>java:S110</sonar.issue.ignore.multicriteria.e2.ruleKey>
+    <sonar.issue.ignore.multicriteria.e2.resourceKey>**/view/swing/*.java</sonar.issue.ignore.multicriteria.e2.resourceKey>
+
+    
   </properties>
 
 
