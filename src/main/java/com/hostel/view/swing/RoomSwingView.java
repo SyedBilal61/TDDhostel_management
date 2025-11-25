@@ -31,15 +31,15 @@ public class RoomSwingView extends JFrame implements RoomView {
     private DefaultListModel<Room> roomListModel; // model storing the rooms
     private JList<Room> roomList; // the visible list
     private JButton btnDeleteSelected;
-    private JLabel lblNewLabel_2;
-    private RoomController roomController;
+    private JLabel lblError;
+    private transient RoomController roomController; //put transient to remove code smell
 
     DefaultListModel<Room> getRoomListModel() {
         return roomListModel;
     }
 
     private void resetErrorLabel() {
-        lblNewLabel_2.setText(" "); // clear the error label
+        lblError.setText(" "); // clear the error label
     }
 
     // setter for roomController
@@ -52,7 +52,7 @@ public class RoomSwingView extends JFrame implements RoomView {
     public RoomSwingView() {
         setTitle("HostelView");
         setSize(600, 400); // make the frame visible for e2e
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // close on exit
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE); // close on exit
 
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[] { 0, 0, 0 };
@@ -60,7 +60,7 @@ public class RoomSwingView extends JFrame implements RoomView {
         gridBagLayout.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
         gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE };
         getContentPane().setLayout(gridBagLayout);
-
+        
         JLabel lblNewLabel = new JLabel("RoomId");
         GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
         gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
@@ -143,12 +143,9 @@ public class RoomSwingView extends JFrame implements RoomView {
         // 2. Create the JList and connect it to the model
         roomList = new JList<>(roomListModel);
 
-        roomList.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-
-                btnDeleteSelected.setEnabled(roomList.getSelectedIndex() != -1);
-            }
-        });
+        roomList.addListSelectionListener(e ->
+                btnDeleteSelected.setEnabled(roomList.getSelectedIndex() != -1)  
+        );
         roomList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         roomList.setName("roomList"); // same name as before
 
@@ -172,15 +169,15 @@ public class RoomSwingView extends JFrame implements RoomView {
         gbc_btnDeleteSelected.gridy = 4;
         getContentPane().add(btnDeleteSelected, gbc_btnDeleteSelected);
 
-        lblNewLabel_2 = new JLabel(" ");
-        lblNewLabel_2.setName("errorMessageLabel");
-        lblNewLabel_2.setForeground(Color.RED);
+        lblError = new JLabel(" ");
+        lblError.setName("errorMessageLabel");
+        lblError.setForeground(Color.RED);
         GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
         gbc_lblNewLabel_2.gridwidth = 2;
         gbc_lblNewLabel_2.insets = new Insets(0, 0, 0, 5);
         gbc_lblNewLabel_2.gridx = 0;
         gbc_lblNewLabel_2.gridy = 5;
-        getContentPane().add(lblNewLabel_2, gbc_lblNewLabel_2);
+        getContentPane().add(lblError, gbc_lblNewLabel_2);
     }
 
     @Override
@@ -192,8 +189,8 @@ public class RoomSwingView extends JFrame implements RoomView {
 
     @Override
     public void showError(String message, Room room) {
-        lblNewLabel_2.setText(message + ": " + room);
-        lblNewLabel_2.setForeground(Color.RED); // make the error message red
+        lblError.setText(message + ": " + room);
+        lblError.setForeground(Color.RED); // make the error message red
 
     }
 

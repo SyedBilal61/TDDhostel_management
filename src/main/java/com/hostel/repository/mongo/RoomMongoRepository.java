@@ -21,6 +21,12 @@ public class RoomMongoRepository implements RoomRepository {
 
     /* MongoDB collection for rooms */
     private final MongoCollection<Document> roomCollection;
+    
+    //Created this constant to remove code smells to use multiple times in the code
+    private static final String ROOM_NUMBER_FIELD = "roomNumber";
+    
+    
+    
 
     /* Constructor: get the collection from MongoDB database */
     public RoomMongoRepository(MongoClient client, String databaseName, String collectionName) {
@@ -31,12 +37,12 @@ public class RoomMongoRepository implements RoomRepository {
     @Override
     public List<Room> findAll() {
         return StreamSupport.stream(roomCollection.find().spliterator(), false).map(this::fromDocumentToRoom)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
     public Room findByRoomNumber(String roomNumber) {
-        Document doc = roomCollection.find(eq("roomNumber", roomNumber)).first();
+        Document doc = roomCollection.find(eq(ROOM_NUMBER_FIELD, roomNumber)).first();
         if (doc != null) {
             return fromDocumentToRoom(doc);
         }
@@ -45,17 +51,17 @@ public class RoomMongoRepository implements RoomRepository {
 
     @Override
     public void save(Room room) {
-        Document doc = new Document().append("roomNumber", room.getRoomNumber()).append("tenant", room.getTenant());
+        Document doc = new Document().append(ROOM_NUMBER_FIELD, room.getRoomNumber()).append("tenant", room.getTenant());
 
         // Use upsert: insert new or replace existing
-        roomCollection.replaceOne(eq("roomNumber", room.getRoomNumber()), doc, new ReplaceOptions().upsert(true));
+        roomCollection.replaceOne(eq(ROOM_NUMBER_FIELD, room.getRoomNumber()), doc, new ReplaceOptions().upsert(true));
     }
 
     /* Convert MongoDB document to Room object */
 
     private Room fromDocumentToRoom(Document doc) {
 
-        Room room = new Room(doc.getString("roomNumber"));
+        Room room = new Room(doc.getString(ROOM_NUMBER_FIELD));
         String tenant = doc.getString("tenant");
 
         if (tenant != null) {

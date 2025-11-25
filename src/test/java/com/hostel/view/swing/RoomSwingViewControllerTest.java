@@ -24,7 +24,7 @@ public class RoomSwingViewControllerTest {
     @Before
     public void setup() {
         roomController = mock(RoomController.class);
-        roomSwingView = GuiActionRunner.execute(() -> new RoomSwingView());
+        roomSwingView = GuiActionRunner.execute(RoomSwingView::new);
         roomSwingView.setRoomController(roomController);
 
         window = new FrameFixture(roomSwingView);

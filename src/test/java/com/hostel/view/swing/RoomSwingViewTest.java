@@ -1,6 +1,7 @@
 package com.hostel.view.swing;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 
@@ -56,6 +57,9 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
         window.button(JButtonMatcher.withText("Delete Selected")).requireDisabled();
         window.label("errorMessageLabel").requireText(" ");
 
+        // explicitly assertions to remove code smell
+        assertTrue(window.textBox("roomIdTextBox").target().isEnabled());
+
     }
 
     @Test
@@ -64,7 +68,8 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
         window.textBox("roomIdTextBox").enterText("A1");
         window.textBox("nameTextBox").enterText("zain");
         window.button(JButtonMatcher.withText("Add")).requireEnabled();
-
+        // explicitly assertions to remove code smell
+        assertTrue(window.button(JButtonMatcher.withText("Add")).target().isEnabled());
     }
 
     @Test
@@ -76,6 +81,7 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
         idTextBox.enterText("A1");
         nameTextBox.enterText("   "); // three spaces
         window.button(JButtonMatcher.withText("Add")).requireDisabled();
+        assertTrue(!window.button(JButtonMatcher.withText("Add")).target().isEnabled()); // add assertion satisfy sonar
 
         // Reset text fields
         idTextBox.setText("");
@@ -85,11 +91,14 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
         idTextBox.enterText("   "); // spaces
         nameTextBox.enterText("zain");
         window.button(JButtonMatcher.withText("Add")).requireDisabled();
+        assertTrue(!window.button(JButtonMatcher.withText("Add")).target().isEnabled()); // add assertion satisfy sonar
 
         // Case 3: both fields are spaces
         idTextBox.setText("  ");
         nameTextBox.setText(" ");
         window.button(JButtonMatcher.withText("Add")).requireDisabled();
+        assertTrue(!window.button(JButtonMatcher.withText("Add")).target().isEnabled()); // add assertion satisfy sonar
+
     }
 
     // check when the Delete Selected button only enabled after a room is selected
@@ -113,11 +122,13 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
 
         // verify enable
         deleteButton.requireEnabled();
+        assertTrue(deleteButton.target().isEnabled());
 
         window.list("roomList").clearSelection();
 
         // verfiy disabled
         deleteButton.requireDisabled();
+        assertTrue(!deleteButton.target().isEnabled());
 
     }
     // Interface Implementation Tests
@@ -145,6 +156,8 @@ public class RoomSwingViewTest extends AssertJSwingJUnitTestCase {
         GuiActionRunner.execute(() -> roomSwingView.showError("Error Occured", room1));
 
         window.label("errorMessageLabel").requireText("Error Occured: " + room1);
+        // assert to satisfy sonar
+        assertTrue(window.label("errorMessageLabel").target().getText().equals("Error Occured: " + room1));
 
     }
 

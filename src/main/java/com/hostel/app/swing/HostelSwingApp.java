@@ -6,7 +6,6 @@ import java.util.concurrent.Callable;
 import com.hostel.controller.RoomController;
 import com.hostel.repository.mongo.RoomMongoRepository;
 import com.hostel.view.swing.RoomSwingView;
-
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
 
@@ -35,7 +34,7 @@ public class HostelSwingApp implements Callable<Void> {
     
     
     public static void main(String[] args) {
-        CommandLine.call(new HostelSwingApp(), args);
+        new CommandLine(new HostelSwingApp()).execute(args);
     }
 
     @Override

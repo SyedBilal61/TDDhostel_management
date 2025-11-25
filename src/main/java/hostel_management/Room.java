@@ -36,7 +36,7 @@ public class Room {
     }
 
     @Override
-    public String toString() {
+    public String toString() { // NOSONAR
         if (tenant == null || tenant.isEmpty()) {
             return roomNumber + " (Empty)";
         }

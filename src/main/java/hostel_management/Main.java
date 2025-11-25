@@ -1,6 +1,7 @@
 package hostel_management;
 
 import org.bson.Document;
+import java.util.logging.Logger;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -17,7 +18,10 @@ import com.mongodb.client.MongoDatabase;
  */
 
 public class Main {
+    private static final Logger LOGGER = Logger.getLogger(Main.class.getName()); // used Logger for removing code smell
+
     public static void main(String[] args) {
+
         String mongoHost = "mongodb";// or mongoDB when running through docker
         if (args.length > 0)
             mongoHost = args[0];
@@ -31,7 +35,7 @@ public class Main {
         collection.insertOne(doc);
 
         // Should print "HelloWorld!"
-        System.out.println(collection.find().first().get("type"));
+        LOGGER.info(collection.find().first().get("type").toString());
         mongoClient.close();
     }
 }
