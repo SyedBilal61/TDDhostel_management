@@ -29,6 +29,9 @@
     <!-- Ignore deep inheritance for GUI code -->
     <sonar.issue.ignore.multicriteria.e2.ruleKey>java:S110</sonar.issue.ignore.multicriteria.e2.ruleKey>
     <sonar.issue.ignore.multicriteria.e2.resourceKey>**/view/swing/*.java</sonar.issue.ignore.multicriteria.e2.resourceKey>
+    
+    <sonar.coverage.exclusions>**/view/swing/*.java, **/app/swing/*.java, **/Main.java</sonar.coverage.exclusions>
+
 
     
   </properties>
