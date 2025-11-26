@@ -20,3 +20,9 @@
 
 #VULNERABILITES IN SONARCLOUD
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=SyedBilal61_TDDhostel_management&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=SyedBilal61_TDDhostel_management)
+
+
+#Environment Information
+
+The project was developed and tested using Docker 20 and Testcontainers 1.15, along with JDK 17.0.15. Testcontainers 1.15 is compatible with Docker versions up to approximately 26. On machines with newer Docker versions (e.g., 29), the project may require an updated Testcontainers version to ensure full compatibility. Using JDK 17.0.15 ensures consistent builds and successful execution of tests across different environments and CI systems.
+
