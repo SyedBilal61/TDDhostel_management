@@ -1,351 +1,297 @@
 <!-- Root project definition with Maven schema -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  
-  <!-- Project metadata -->
-  <groupId>com.hostel</groupId>
-  <artifactId>hostel_management</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>hostel_management</name>
-
-
-    <!-- Properties for version management, compiler, and sonar coverage -->
-
-  <properties>
-  <!-- Encoding and Java version -->
-
-	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
-  
-  
-   <!-- Dependency versions -->
-    <junit.version>4.13.2</junit.version>
-    <log4j.version>2.23.1</log4j.version>
-    <testcontainers.version>1.15.1</testcontainers.version>
-    <cucumber.version>5.5.0</cucumber.version>
-  
-	<!-- For Satisfying SonarCloud-->  
-    <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
-    
-    <sonar.issue.ignore.multicriteria>e1,e2</sonar.issue.ignore.multicriteria>
-
-	<!-- Ignore naming convention for GUI code -->
-    <sonar.issue.ignore.multicriteria.e1.ruleKey>java:S117</sonar.issue.ignore.multicriteria.e1.ruleKey>
-    <sonar.issue.ignore.multicriteria.e1.resourceKey>**/view/swing/*.java</sonar.issue.ignore.multicriteria.e1.resourceKey>
-
+	<modelVersion>4.0.0</modelVersion>
+	<!-- Project metadata -->
+	<groupId>com.hostel</groupId>
+	<artifactId>hostel_management</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>hostel_management</name>
+	<!-- Properties for version management, compiler, and sonar coverage -->
+	<properties>
+		<!-- Encoding and Java version -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<!-- Dependency versions -->
+		<junit.version>4.13.2</junit.version>
+		<log4j.version>2.23.1</log4j.version>
+		<testcontainers.version>1.15.1</testcontainers.version>
+		<cucumber.version>5.5.0</cucumber.version>
+		<!-- For Satisfying SonarCloud-->
+		<sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+		<sonar.issue.ignore.multicriteria>e1,e2</sonar.issue.ignore.multicriteria>
+		<!-- Ignore naming convention for GUI code -->
+		<sonar.issue.ignore.multicriteria.e1.ruleKey>java:S117</sonar.issue.ignore.multicriteria.e1.ruleKey>
+		<sonar.issue.ignore.multicriteria.e1.resourceKey>**/view/swing/*.java</sonar.issue.ignore.multicriteria.e1.resourceKey>
 		<!-- Ignore deep inheritance for GUI code -->
-    <sonar.issue.ignore.multicriteria.e2.ruleKey>java:S110</sonar.issue.ignore.multicriteria.e2.ruleKey>
-    
-    <sonar.issue.ignore.multicriteria.e2.resourceKey>**/view/swing/*.java</sonar.issue.ignore.multicriteria.e2.resourceKey>
-    
-    <sonar.coverage.exclusions>**/view/swing/*.java,**/app/swing/*.java, **/Main.java</sonar.coverage.exclusions>
-    
+		<sonar.issue.ignore.multicriteria.e2.ruleKey>java:S110</sonar.issue.ignore.multicriteria.e2.ruleKey>
+		<sonar.issue.ignore.multicriteria.e2.resourceKey>**/view/swing/*.java</sonar.issue.ignore.multicriteria.e2.resourceKey>
+		<sonar.coverage.exclusions>**/view/swing/*.java,**/app/swing/*.java, **/Main.java</sonar.coverage.exclusions>
 	</properties>
-
-    <!-- Dependencies for testing, logging, database, GUI, BDD, and CLI -->
-
-<dependencies>
-        
-        <!-- JUnit for unit testing -->
-    <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>${junit.version}</version>
-        <scope>test</scope>
-	</dependency>
-		
-		<!-- Log4j API  and core for loging-->
-    <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-api</artifactId>
-        <version>${log4j.version}</version>
+	<!-- Dependencies for testing, logging, database, GUI, BDD, and CLI -->
+	<dependencies>
+		<!-- JUnit for unit testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
 		</dependency>
-		
+		<!-- Log4j API  and core for loging-->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
 		<!-- Log4j Core -->
-    <dependency>
-        <groupId>org.apache.logging.log4j</groupId>
-        <artifactId>log4j-core</artifactId>
-        <version>${log4j.version}</version>
-	</dependency>
- 
-         <!-- Mockito for mocking in tests -->
-    <dependency>
-         <groupId>org.mockito</groupId>
-         <artifactId>mockito-core</artifactId>
-    	 <version>5.11.0</version>
-      	 <scope>test</scope>
-	</dependency>
-
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<!-- Mockito for mocking in tests -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>5.11.0</version>
+			<scope>test</scope>
+		</dependency>
 		<!-- Dependency to interact with mongoDB from Java-->
-	<dependency>
-    	<groupId>org.mongodb</groupId>
-    	<artifactId>mongo-java-driver</artifactId>
-    	<version>3.12.7</version>
-	</dependency>
-		
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+			<version>3.12.7</version>
+		</dependency>
 		<!-- Required to see Logs of communication with the data base -->
-	<dependency>
- 		 <groupId>ch.qos.logback</groupId>
-  		 <artifactId>logback-classic</artifactId>
-   		 <version>1.2.3</version>
-	</dependency>
-      
-       <!-- Embedded MongoDB for tests -->
-	<dependency>
-    	 <groupId>de.bwaldvogel</groupId>
-    	 <artifactId>mongo-java-server</artifactId>
-    	 <version>1.11.1</version>
-    	 <scope>test</scope>
-	</dependency>
-
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.2.3</version>
+		</dependency>
+		<!-- Embedded MongoDB for tests -->
+		<dependency>
+			<groupId>de.bwaldvogel</groupId>
+			<artifactId>mongo-java-server</artifactId>
+			<version>1.11.1</version>
+			<scope>test</scope>
+		</dependency>
 		<!-- tell maven to use containers-->
-	<dependency>
-    	<groupId>org.testcontainers</groupId>
-    	<artifactId>testcontainers</artifactId>
-    	<version>${testcontainers.version}</version>
-    	<scope>test</scope>
-	</dependency>
-
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>testcontainers</artifactId>
+			<version>${testcontainers.version}</version>
+			<scope>test</scope>
+		</dependency>
 		<!-- automatically execute MongoDB instance inside a Docker container-->
-	<dependency>
-    	<groupId>org.testcontainers</groupId>
-    	<artifactId>mongodb</artifactId>
-    	<version>${testcontainers.version}</version>
-    	<scope>test</scope>
-	</dependency>
-
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>mongodb</artifactId>
+			<version>${testcontainers.version}</version>
+			<scope>test</scope>
+		</dependency>
 		<!--Includes assertj-core + Swing GUI testing tools. -->
-	<dependency>
-    	<groupId>org.assertj</groupId>
-    	<artifactId>assertj-swing-junit</artifactId>
-    	<version>3.17.1</version>
-    	<scope>test</scope>
-	</dependency>
-	
-	       <!-- Picocli for CLI apps -->
-	<dependency>
-    	<groupId>info.picocli</groupId>
-    	<artifactId>picocli</artifactId>
-    	<version>4.6.1</version>
-    </dependency>
-
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-swing-junit</artifactId>
+			<version>3.17.1</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Picocli for CLI apps -->
+		<dependency>
+			<groupId>info.picocli</groupId>
+			<artifactId>picocli</artifactId>
+			<version>4.6.1</version>
+		</dependency>
 		<!-- Cucumber JUnit integration -->
-    <dependency>
-    	 <groupId>io.cucumber</groupId>
-         <artifactId>cucumber-junit</artifactId>
-         <version>${cucumber.version}</version>
-         <scope>test</scope>
-	</dependency>
-	
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
 		<!-- Cucumber core for Java -->
-    <dependency>
-        <groupId>io.cucumber</groupId>
-        <artifactId>cucumber-java</artifactId>
-        <version>${cucumber.version}</version>
-        <scope>test</scope>
-	</dependency>
-
-</dependencies>
-    
-    <!-- Build section with plugins -->
-
-<build>
-        <plugins>
-            <plugin>
-                <groupId>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<!-- Build section with plugins -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>
 					org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.10.1</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.target}</target>
 				</configuration>
 			</plugin>
 			<!-- for sourceJAR-->
-            <plugin>
-    <groupId>
+			<plugin>
+				<groupId>
 					org.apache.maven.plugins</groupId>
-    <artifactId>maven-source-plugin</artifactId>
-    <version>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>
 					3.0.1</version>
-    <executions>
-        <execution>
-            <id>attach-sources</id>
-            <phase>package</phase>
-            <goals>
-                <goal>jar</goal>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
 						</goals>
 					</execution>
 				</executions>
 			</plugin>
 			<!-- For JAVADOC-->
-<plugin>
-    <groupId>
+			<plugin>
+				<groupId>
 					org.apache.maven.plugins</groupId>
-    <artifactId>maven-javadoc-plugin</artifactId>
-    <version>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>
 					3.0.1</version>
-    <executions>
-        <execution>
-            <id>attach-javadocs</id>
-            <goals>
-                <goal>jar</goal>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
 						</goals>
 					</execution>
 				</executions>
 			</plugin>
 			<!-- for coverall report-->
-      <plugin>
-      <groupId>
+			<plugin>
+				<groupId>
 					org.eluder.coveralls</groupId>
-      <artifactId>coveralls-maven-plugin</artifactId>
-      <version>
+				<artifactId>coveralls-maven-plugin</artifactId>
+				<version>
 					4.3.0</version>
-      <dependencies>
-        <dependency>
-          <groupId>javax.xml.bind</groupId>
-          <artifactId>jaxb-api</artifactId>
-          <version>
+				<dependencies>
+					<dependency>
+						<groupId>javax.xml.bind</groupId>
+						<artifactId>jaxb-api</artifactId>
+						<version>
 							2.3.1</version>
 					</dependency>
 				</dependencies>
 			</plugin>
- 
- 
- 
- 
- 
-     
-<plugin>
-    <groupId>
+			<plugin>
+				<groupId>
 					org.apache.maven.plugins</groupId>
-    <artifactId>maven-surefire-plugin</artifactId>
-    <version>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>
 					3.1.2</version>
-    <configuration>
-        <includes>
-            <include>**/*Test.java</include>
+				<configuration>
+					<includes>
+						<include>**/*Test.java</include>
 					</includes>
-            <argLine>
-						${argLine}</argLine>   <!-- this allows JaCoCo to attach to test JVMs -->
-
+					<argLine>
+						${argLine}</argLine>
+					<!-- this allows JaCoCo to attach to test JVMs -->
 				</configuration>
 			</plugin>
-
-
-
-
-<plugin>
-    <groupId>
+			<plugin>
+				<groupId>
 					org.pitest</groupId>
-    <artifactId>pitest-maven</artifactId>
-    <version>1.15.8</version>
-
-    <configuration>
-
+				<artifactId>pitest-maven</artifactId>
+				<version>1.15.8</version>
+				<configuration>
 					<!-- ONLY mutate Room.java and Apartment.java -->
-        <targetClasses>
-            <param>
+					<targetClasses>
+						<param>
 							hostel_management.Room</param>
-            <param>
+						<param>
 							hostel_management.Apartment</param>
 					</targetClasses>
-
 					<!-- ONLY run unit tests (RoomTest and ApartmentTest) -->
-        <targetTests>
-            <param>
+					<targetTests>
+						<param>
 							hostel_management.RoomTest</param>
-            <param>
+						<param>
 							hostel_management.ApartmentTest</param>
 					</targetTests>
-
 					<!-- EXCLUDE EVERYTHING ELSE IN PROJECT -->
-        <excludedClasses>
+					<excludedClasses>
 						<!-- exclude Main -->
-            <param>
+						<param>
 							hostel_management.Main</param>
-
 						<!-- exclude Swing GUI classes -->
-            <param>
+						<param>
 							com.hostel.view.swing.*</param>
-
 						<!-- exclude controllers -->
-            <param>
+						<param>
 							com.hostel.controller.*</param>
-
 						<!-- exclude model-view-controller IT tests -->
-            <param>hostel_management.*IT</param>
-            <param>
+						<param>hostel_management.*IT</param>
+						<param>
 							*IT</param>
-
 						<!-- exclude integration and Mongo tests -->
-            <param>*Integration*</param>
-            <param>*Mongo*</param>
+						<param>*Integration*</param>
+						<param>*Mongo*</param>
 					</excludedClasses>
-
-        <verbose>
+					<verbose>
 						true</verbose>
-
 				</configuration>
 			</plugin>
-
-
-<plugin>
-    <groupId>
+			<plugin>
+				<groupId>
 					org.jacoco</groupId>
-    <artifactId>jacoco-maven-plugin</artifactId>
-    <version>0.8.12</version>
-    <configuration>
-        <excludes>
-            <exclude>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.12</version>
+				<configuration>
+					<excludes>
+						<exclude>
 							**/Main.*</exclude>
-            <exclude>**/view/swing/**</exclude>
-            <exclude>
+						<exclude>**/view/swing/**</exclude>
+						<exclude>
 							**/app/swing/HostelSwingApp*.*</exclude>
 					</excludes>
 				</configuration>
-    <executions>
+				<executions>
 					<!-- Prepare JaCoCo agent before tests -->
-        <execution>
-            <id>
+					<execution>
+						<id>
 							prepare-agent</id>
-            <goals>
-                <goal>prepare-agent</goal>
+						<goals>
+							<goal>prepare-agent</goal>
 						</goals>
 					</execution>
-
 					<!--  Generate report after tests -->
-        <execution>
-            <id>
+					<execution>
+						<id>
 							report</id>
-            <phase>verify</phase> <!-- automatically run after tests -->
-            <goals>
-                <goal>report</goal>
+						<phase>verify</phase>
+						<!-- automatically run after tests -->
+						<goals>
+							<goal>report</goal>
 						</goals>
 					</execution>
-
 					<!-- Check coverage thresholds -->
-        <execution>
-            <id>
+					<execution>
+						<id>
 							jacoco-check</id>
-            <phase>verify</phase>
-            <goals>
-                <goal>check</goal>
+						<phase>verify</phase>
+						<goals>
+							<goal>check</goal>
 						</goals>
-            <configuration>
-                <rules>
-                    <rule>
-                        <element>
+						<configuration>
+							<rules>
+								<rule>
+									<element>
 										PACKAGE</element>
-                        <limits>
-                            <limit>
-                                <counter>LINE</counter>
-                                <value>
+									<limits>
+										<limit>
+											<counter>LINE</counter>
+											<value>
 												COVEREDRATIO</value>
-                                <minimum>0.80</minimum>
+											<minimum>0.80</minimum>
 										</limit>
 									</limits>
 								</rule>
@@ -354,192 +300,170 @@
 					</execution>
 				</executions>
 			</plugin>
-
-
 			<!-- create a fat JAR using Maven Assembly Plugin-->
-   
-   <plugin>
-            <groupId>
+			<plugin>
+				<groupId>
 					org.apache.maven.plugins</groupId>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <version>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>
 					3.6.0</version>
-            <configuration>
-                <descriptorRefs>
-                    <descriptorRef>jar-with-dependencies</descriptorRef>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
-                <archive>
-                    <manifest>
-                        <mainClass>
+					<archive>
+						<manifest>
+							<mainClass>
 								hostel_management.Main</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
-            <executions>
-                <execution>
-                    <id>
+				<executions>
+					<execution>
+						<id>
 							make-assembly</id>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>single</goal>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
 						</goals>
 					</execution>
 				</executions>
 			</plugin>
-
 			<!-- add plugin for understaning maven about the integration tests   -->
-        
-   <plugin>
-    <groupId>
+			<plugin>
+				<groupId>
 					org.codehaus.mojo</groupId>
-    <artifactId>build-helper-maven-plugin</artifactId>
-    <version>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>
 					3.0.0</version>
-    <executions>
-        <execution>
-            <id>add-test-source</id>
-            <phase>generate-test-sources</phase>
-            <goals>
-                <goal>
+				<executions>
+					<execution>
+						<id>add-test-source</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>
 								add-test-source</goal>
 						</goals>
-            <configuration>
-                <sources>
-                    <source>
+						<configuration>
+							<sources>
+								<source>
 									src/it/java</source>
-                    <source>src/e2e/java</source>
-                    <source>
+								<source>src/e2e/java</source>
+								<source>
 									src/bdd/java</source>
-
 							</sources>
 						</configuration>
 					</execution>
-        <execution>
-            <id>
+					<execution>
+						<id>
 							add-test-resource</id>
-            <phase>generate-test-resources</phase>
-            <goals>
-                <goal>
+						<phase>generate-test-resources</phase>
+						<goals>
+							<goal>
 								add-test-resource</goal>
 						</goals>
-            <configuration>
-                <resources>
-                    <resource>
-                        <directory>
-										src/bdd/resources</directory> <!--  BDD feature files -->
+						<configuration>
+							<resources>
+								<resource>
+									<directory>
+										src/bdd/resources</directory>
+									<!--  BDD feature files -->
 								</resource>
 							</resources>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-
-
 			<!-- add a plugin  for intergataion test and E2E and BDD -->
-
-<plugin>
-    <groupId>
+			<plugin>
+				<groupId>
 					org.apache.maven.plugins</groupId>
-    <artifactId>maven-failsafe-plugin</artifactId>
-    <version>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>
 					2.22.1</version>
-    <executions>
+				<executions>
 					<!-- Integration Tests -->
-        <execution>
-            <id>default-it</id>
-            <goals>
-                <goal>integration-test</goal>
-                <goal>verify</goal>
+					<execution>
+						<id>default-it</id>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
 						</goals>
-            <configuration>
-                <includes>
-                    <include>
+						<configuration>
+							<includes>
+								<include>
 									**/*IT.java</include>
 							</includes>
 						</configuration>
 					</execution>
-
 					<!-- E2E Tests -->
-        <execution>
-            <id>
+					<execution>
+						<id>
 							e2e-tests</id>
-            <goals>
-                <goal>integration-test</goal>
-                <goal>verify</goal>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
 						</goals>
-            <configuration>
-                <includes>
-                    <include>
+						<configuration>
+							<includes>
+								<include>
 									**/*E2E.java</include>
 							</includes>
-                <excludes>
-                    <exclude>
+							<excludes>
+								<exclude>
 									**/*IT.java</exclude>
 							</excludes>
 						</configuration>
 					</execution>
-
-
 					<!-- BDD TESTs-->
-        
-        <execution>
-    <id>
+					<execution>
+						<id>
 							bdd-tests</id>
-    <goals>
-        <goal>integration-test</goal>
-        <goal>verify</goal>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
 						</goals>
-    <configuration>
-        <excludes>
-            <exclude>
-									**/*IT.java</exclude> <!-- skip regular IT tests -->
+						<configuration>
+							<excludes>
+								<exclude>
+									**/*IT.java</exclude>
+								<!-- skip regular IT tests -->
 							</excludes>
-        <includes>
-            <include>
-									**/*BDD.java</include> <!-- run only BDD tests -->
+							<includes>
+								<include>
+									**/*BDD.java</include>
+								<!-- run only BDD tests -->
 							</includes>
 						</configuration>
 					</execution>
-
-
 				</executions>
 			</plugin>
-
-
-
-
-
-
-
-    <plugin>
-      <groupId>
+			<plugin>
+				<groupId>
 					org.sonarsource.scanner.maven</groupId>
-      <artifactId>sonar-maven-plugin</artifactId>
-      <version>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>
 					3.9.1.2184</version>
 			</plugin>
-
-
 		</plugins>
 	</build>
-<profiles>
-
+	<profiles>
 		<!--  Profile for PIT Mutation Testing -->
-  <profile>
-    <id>
+		<profile>
+			<id>
 				mutation-testing</id>
-    <build>
-      <plugins>
-        <plugin>
-          <groupId>org.pitest</groupId>
-          <artifactId>pitest-maven</artifactId>
-          <version>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.pitest</groupId>
+						<artifactId>pitest-maven</artifactId>
+						<version>
 							1.15.8</version>
-          <executions>
-            <execution>
-              <phase>verify</phase>
-              <goals>
-                <goal>mutationCoverage</goal>
+						<executions>
+							<execution>
+								<phase>verify</phase>
+								<goals>
+									<goal>mutationCoverage</goal>
 								</goals>
 							</execution>
 						</executions>
@@ -547,160 +471,152 @@
 				</plugins>
 			</build>
 		</profile>
-
 		<!-- Profile to build and run Docker containers for the project -->
-
-
-<profile>
-  <id>
+		<profile>
+			<id>
 				docker</id>
-  <build>
-    <plugins>
-      <plugin>
-    <groupId>io.fabric8</groupId>
-    <artifactId>docker-maven-plugin</artifactId>
-    <version>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>io.fabric8</groupId>
+						<artifactId>docker-maven-plugin</artifactId>
+						<version>
 							0.38.0</version>
-
-    <configuration>
+						<configuration>
 							<!-- Automatically create and remove custom Docker networks -->
-        <autoCreateCustomNetworks>true</autoCreateCustomNetworks>
-
-        <images>
+							<autoCreateCustomNetworks>true</autoCreateCustomNetworks>
+							<images>
 								<!-- MongoDB Docker image -->
-            <image>
-                <name>
+								<image>
+									<name>
 										mongo:4.4.3</name>
-                <alias>mongodb</alias>
-                <run>
-                    <network>
-                        <mode>custom</mode>
-                        <name>
+									<alias>mongodb</alias>
+									<run>
+										<network>
+											<mode>custom</mode>
+											<name>
 												mynetwork</name>
-                        <aliases>
-                            <alias>mongodb</alias>
+											<aliases>
+												<alias>mongodb</alias>
 											</aliases>
 										</network>
-                    <wait>
-                        <log>Waiting
+										<wait>
+											<log>Waiting
 												for connections</log>
-                        <time>10000</time>
+											<time>10000</time>
 										</wait>
 									</run>
 								</image>
-
 								<!-- Java application Docker image -->
-            <image>
-                <name>
-										java-mongo-hostel</name> <!-- your real image name -->
-                <build>
-                    <contextDir>
+								<image>
+									<name>
+										java-mongo-hostel</name>
+									<!-- your real image name -->
+									<build>
+										<contextDir>
 											${project.basedir}</contextDir>
-                    <args>
-                        <jarToCopy>
+										<args>
+											<jarToCopy>
 												${project.artifactId}-${project.version}.jar</jarToCopy>
 										</args>
 									</build>
-                <run>
-                    <network>
-                        <mode>
+									<run>
+										<network>
+											<mode>
 												custom</mode>
-                        <name>mynetwork</name>
+											<name>mynetwork</name>
 										</network>
-                    <dependsOn>
-                        <dependsOn>
+										<dependsOn>
+											<dependsOn>
 												mongodb</dependsOn>
 										</dependsOn>
-                    <wait>
-                        <log>
+										<wait>
+											<log>
 												HelloWorld!</log>
-                        <time>10000</time>
+											<time>10000</time>
 										</wait>
 									</run>
 								</image>
-
 								<!--  for docker compose up-->
-
-            <image>
-    <alias>
-										hostel_management</alias>   <!-- MUST match service name -->
-    <external>
-        <type>compose</type>
-        <basedir>
+								<image>
+									<alias>
+										hostel_management</alias>
+									<!-- MUST match service name -->
+									<external>
+										<type>compose</type>
+										<basedir>
 											${project.basedir}</basedir>
 									</external>
-    <run>
-        <wait>
-            <log>
+									<run>
+										<wait>
+											<log>
 												HelloWorld!</log>
-            <time>10000</time>
+											<time>10000</time>
 										</wait>
 									</run>
 								</image>
-
 							</images>
 						</configuration>
-
-    <executions>
-        <execution>
-            <id>
+						<executions>
+							<execution>
+								<id>
 									docker-build-and-run</id>
-            <phase>verify</phase>
-            <goals>
-                <goal>build</goal>
-                <goal>
+								<phase>verify</phase>
+								<goals>
+									<goal>build</goal>
+									<goal>
 										start</goal>
 								</goals>
 							</execution>
 						</executions>
 					</plugin>
-
 				</plugins>
 			</build>
 		</profile>
-
-
 		<!-- Profile added for -pJacoco reports-->
-  <profile>
-    <id>
+		<profile>
+			<id>
 				jacoco</id>
-    <build>
-      <plugins>
-        <plugin>
-          <groupId>org.jacoco</groupId>
-          <artifactId>jacoco-maven-plugin</artifactId>
-          <version>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<version>
 							0.8.12</version>
-          <executions>
-            <execution>
-              <id>prepare-agent</id>
-              <goals><goal>prepare-agent</goal>
+						<executions>
+							<execution>
+								<id>prepare-agent</id>
+								<goals>
+									<goal>prepare-agent</goal>
 								</goals>
 							</execution>
-            <execution>
-              <id>
+							<execution>
+								<id>
 									report</id>
-              <phase>verify</phase>
-              <goals><goal>report</goal>
+								<phase>verify</phase>
+								<goals>
+									<goal>report</goal>
 								</goals>
 							</execution>
-            <execution>
-              <id>
+							<execution>
+								<id>
 									jacoco-check</id>
-              <phase>verify</phase>
-              <goals><goal>check</goal>
+								<phase>verify</phase>
+								<goals>
+									<goal>check</goal>
 								</goals>
-              <configuration>
-                <rules>
-                  <rule>
-                    <element>
+								<configuration>
+									<rules>
+										<rule>
+											<element>
 												PACKAGE</element>
-                    <limits>
-                      <limit>
-                        <counter>LINE</counter>
-                        <value>
+											<limits>
+												<limit>
+													<counter>LINE</counter>
+													<value>
 														COVEREDRATIO</value>
-                        <minimum>0.80</minimum>
+													<minimum>0.80</minimum>
 												</limit>
 											</limits>
 										</rule>
@@ -712,7 +628,5 @@
 				</plugins>
 			</build>
 		</profile>
-
 	</profiles>
-
 </project>
